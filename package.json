@@ -12,8 +12,9 @@
     "nohoist": []
   },
   "scripts": {
-    "build": "lerna run build --stream",
-    "dev": "lerna run dev --parallel",
+    "generate": "yarn workspace @bichi/server generate && yarn workspace @bichi/web generate",
+    "build": "yarn generate && lerna run build --stream",
+    "dev": "yarn generate && lerna run dev --parallel",
     "format": "lerna run format --parallel",
     "format:package.json": "sort-package-json \"package.json\" \"packages/*/package.json\" ",
     "start": "lerna run start",
@@ -24,6 +25,7 @@
     "react-dom": "~17.0.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/plugin-transform-react-jsx": "^7.12.5",

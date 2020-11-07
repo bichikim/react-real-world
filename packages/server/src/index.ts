@@ -21,16 +21,20 @@ async function start({emitSchemaFile = true, port = DEFAULT_PORT}: StartOptions 
 
   const server = new ApolloServer({schema})
 
+  if (emitSchemaFile) {
+    return
+  }
+
   return server.listen({port})
 }
 
 
 start({
-  emitSchemaFile: process.env.NODE_ENV === 'development',
+  emitSchemaFile: process.env.NODE_ENV === 'generate',
   port: Number(process.env.PORT),
 }).then((info) => {
   // eslint-disable-next-line no-console
-  console.log(`Server is running on http://localhost:${info.port}`)
+  console.log(`Server is running on http://localhost:${info?.port}`)
 }).catch(() => {
   // eslint-disable-next-line no-console
   console.log('Server starting error')

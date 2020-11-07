@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "next build",
+    "build": "gulp favicons && next build",
     "dev": "next dev",
     "favicongen": "gulp favicons",
     "analyze": "cross-env ANALYZE=true next build",

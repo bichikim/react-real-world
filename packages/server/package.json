@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "ttsc --outDir ./dist -p tsconfig.bundle.json",
-    "dev": "ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
+    "dev": "cross-env NODE_ENV=development ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
+    "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
     "format": "gulp format"
   },
   "dependencies": {
