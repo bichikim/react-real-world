@@ -1,0 +1,9 @@
+node_modules
+dist
+.next
+.jest
+.env
+yarn-error.log
+firebase.config.js
+.idea
+/api

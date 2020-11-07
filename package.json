@@ -1,0 +1,68 @@
+{
+  "name": "react-real-world",
+  "private": true,
+  "repository": "git@github.com:bichikim/react-real-world.git",
+  "license": "MIT",
+  "author": "Bichi Kim <bichi@live.co.kr>",
+  "main": "packages/web/.next",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": []
+  },
+  "scripts": {
+    "build": "lerna run build --stream",
+    "dev": "lerna run dev --parallel",
+    "format": "lerna run format --parallel",
+    "format:package.json": "sort-package-json \"package.json\" \"packages/*/package.json\" ",
+    "start": "lerna run start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "~17.0.1",
+    "react-dom": "~17.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.5",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@octokit/core": "^3.2.1",
+    "@testing-library/react": "^10.4.7",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "@types/node": "^14.14.6",
+    "@types/gulp": "^4.0.6",
+    "@types/jest": "^26.0.15",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@types/testing-library__react-hooks": "^3.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^7.12.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.1",
+    "eslint-plugin-typescript-sort-keys": "^1.5.0",
+    "eslint-plugin-unicorn": "^23.0.0",
+    "eslint-plugin-unused-imports": "^1.0.0",
+    "gulp": "^4.0.2",
+    "gulp-execa": "^2.0.0",
+    "jest": "^26.6.3",
+    "jest-extended": "^0.11.5",
+    "jest-fetch-mock": "^3.0.3",
+    "lerna": "^3.22.1",
+    "react-test-renderer": "~17.0.1",
+    "sort-package-json": "^1.46.1",
+    "ts-node": "^9.0.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.5",
+    "webpack": "^5.4.0"
+  }
+}

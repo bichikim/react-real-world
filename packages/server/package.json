@@ -1,0 +1,27 @@
+{
+  "name": "@bichi/server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ttsc --outDir ./dist -p tsconfig.bundle.json",
+    "dev": "ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
+    "format": "gulp format"
+  },
+  "dependencies": {
+    "apollo-server": "^2.19.0",
+    "class-validator": "^0.12.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.4.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0"
+  },
+  "engines": {
+    "node": ">= 10",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}

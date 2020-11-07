@@ -1,0 +1,12 @@
+{
+  "name": "Remote Schema",
+  "schemaPath": ".graphql/remote-schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Caredoc end-point": {
+        "url": "https://localhost:9090",
+        "introspect": true
+      }
+    }
+  }
+}
