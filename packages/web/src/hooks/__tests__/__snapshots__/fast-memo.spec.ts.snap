@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fast-memo should not rerender 1`] = `
+<div>
+  <div>
+    <div>
+      foo
+    </div>
+  </div>
+  <a>
+    add
+  </a>
+  <div>
+    0
+  </div>
+</div>
+`;
+
+exports[`fast-memo should not rerender 2`] = `
+<div>
+  <div>
+    <div>
+      foo
+    </div>
+  </div>
+  <a>
+    add
+  </a>
+  <div>
+    1
+  </div>
+</div>
+`;
