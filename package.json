@@ -12,6 +12,7 @@
     "nohoist": []
   },
   "scripts": {
+    "favicongen": "yarn workspace @bichi/web favicongen",
     "generate": "yarn workspace @bichi/server generate && yarn workspace @bichi/web generate",
     "build": "yarn generate && lerna run build --stream",
     "dev": "yarn generate && lerna run dev --parallel",

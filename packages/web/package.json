@@ -5,7 +5,7 @@
   "scripts": {
     "build": "gulp favicons && next build",
     "dev": "next dev",
-    "favicongen": "gulp favicons",
+    "favicongen": "cross-env TS_NODE_PROJECT=tsconfig.node.json gulp favicons",
     "analyze": "cross-env ANALYZE=true next build",
     "format": "gulp format",
     "generate": "graphql-codegen",
