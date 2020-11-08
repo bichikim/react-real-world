@@ -6,7 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 
 const withTM = require('next-transpile-modules')([
-  'lodash',
+  'lodash-es',
   'api',
 ])
 
@@ -25,9 +25,6 @@ const config = withBundleAnalyzer(withImages({
       'libraryName': 'antd',
       'style': true,
     }])
-
-    // tre-shacking lodash helper
-    defaultLoaders.babel.options.plugins.push(['lodash'], {})
 
     // alias
     config.resolve.alias['src'] = resolve(__dirname, 'src')
