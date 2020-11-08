@@ -18,6 +18,8 @@ module.exports = {
 
   setupFilesAfterEnv: ['jest-extended'],
 
+  snapshotSerializers: ['jest-emotion'],
+
   testMatch: [
     '**/__tests__/**/?(*.)(spec|test).[jt]s?(x)',
   ],
