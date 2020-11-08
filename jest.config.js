@@ -27,4 +27,8 @@ module.exports = {
     '<rootDir>/node_modules/',
     '(/__tests__/.*|(\\.|/)(test|spec))\\.d.ts$',
   ],
+
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!lodash-es)',
+  ],
 }
