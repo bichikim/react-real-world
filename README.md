@@ -8,7 +8,13 @@ lerna bootstrap
 
 ```
 
+### Generate favicons
+```
+yarn favicongen
+```
+
 ### Compiles and hot-reloads for development
+
 
 ```
 yarn dev
