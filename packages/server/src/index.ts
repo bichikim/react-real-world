@@ -33,8 +33,12 @@ start({
   emitSchemaFile: process.env.NODE_ENV === 'generate',
   port: Number(process.env.PORT),
 }).then((info) => {
+  // in generate mode
+  if (!info) {
+    return
+  }
   // eslint-disable-next-line no-console
-  console.log(`Server is running on http://localhost:${info?.port}`)
+  console.log(`Server is running on http://localhost:${info.port}`)
 }).catch(() => {
   // eslint-disable-next-line no-console
   console.log('Server starting error')
