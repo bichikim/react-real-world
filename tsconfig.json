@@ -8,6 +8,7 @@
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -21,10 +22,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules"
-    ],
     "baseUrl": "."
   },
   "exclude": [
