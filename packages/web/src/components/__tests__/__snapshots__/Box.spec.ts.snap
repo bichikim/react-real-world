@@ -1,26 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Box should render 1`] = `
-.emotion-0 {
-  background-color: blue;
-  margin: 10px;
-  padding: 10px;
-  display: grid;
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  box-shadow: 0 0 0 1ex black;
-  grid-template-columns: 200px,400px,200px;
-}
-
-<div
-  class="emotion-0"
-  display="grid"
-  size="10"
-  value=""
-/>
-`;
-
 exports[`Box should render it 1`] = `
 .emotion-0 {
   background-color: blue;
