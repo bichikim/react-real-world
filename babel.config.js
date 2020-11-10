@@ -5,7 +5,6 @@ module.exports = {
         [
           '@babel/preset-env',
           {
-            // for tree shaking
             targets: {
               node: true,
             },
@@ -19,6 +18,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
+          'api': './api',
           'src': './src',
         },
         cwd: 'packagejson',
@@ -33,6 +33,9 @@ module.exports = {
       {
         // for tree shaking
         modules: false,
+        targets: {
+          node: true,
+        },
       },
     ],
     ['@babel/preset-typescript', {
