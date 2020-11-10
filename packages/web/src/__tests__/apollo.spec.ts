@@ -1,11 +1,13 @@
 import {client} from 'src/apollo'
 import {ApolloClient, gql} from '@apollo/client'
+import fetchMock from 'jest-fetch-mock'
 import {apiUrl} from 'src/env'
 
 describe('apollo', function test() {
   beforeEach(() => {
     fetchMock.resetMocks()
   })
+
   describe('client', function test() {
     it('should be apollo client', function test() {
       expect(client).toBeInstanceOf(ApolloClient)
