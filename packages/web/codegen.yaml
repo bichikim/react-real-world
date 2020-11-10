@@ -11,3 +11,5 @@ generates:
   ./.graphql/remote-schema.graphql:
     plugins:
       - schema-ast
+    config:
+      includeDirectives: true

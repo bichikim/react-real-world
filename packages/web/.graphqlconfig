@@ -1,11 +1,14 @@
 {
-  "name": "Remote Schema",
-  "schemaPath": ".graphql/remote-schema.graphql",
+  "name": "API GraphQL Schema",
+  "schemaPath": "./.graphql/remote-schema.graphql",
   "extensions": {
     "endpoints": {
-      "Caredoc end-point": {
-        "url": "https://localhost:9090",
-        "introspect": true
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:9090/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
       }
     }
   }
