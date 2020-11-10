@@ -157,7 +157,6 @@ module.exports = {
       files: ['*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
-        'unicorn/import-style': 'off',
       },
     },
     {
@@ -231,6 +230,7 @@ module.exports = {
       },
     ],
     'max-depth': ['error', {'max': 4}],
+    'max-len': ['error', {code: 120, ignoreComments: true, ignoreTrailingComments: true, ignoreUrls: true}],
     'max-lines': ['error', 600],
     'max-nested-callbacks': ['error', {'max': 3}],
     'max-params': ['error', {'max': 4}],
