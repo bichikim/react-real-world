@@ -25,9 +25,9 @@
     "__tests__/**/*",
     "types/**/*.d.ts",
     "next-env.d.ts",
-    "./api/**/*.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "api/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "exclude": [
     "node_modules"
