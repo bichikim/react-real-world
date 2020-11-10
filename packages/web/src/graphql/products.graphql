@@ -1,0 +1,10 @@
+query getProducts ($take: Float, $offset: Float, $sort: Boolean) {
+  products(take: $take, offset: $offset, sort: $sort) {
+    id,
+    title,
+    coverImage,
+    price,
+    score,
+    availableCoupon,
+  }
+}
