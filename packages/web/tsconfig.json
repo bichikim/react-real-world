@@ -23,6 +23,7 @@
   "include": [
     "gulpfile.ts",
     "__tests__/**/*",
+    "types/**/*.d.ts",
     "next-env.d.ts",
     "./api/**/*.ts",
     "./src/**/*.ts",
