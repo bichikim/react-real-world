@@ -1,7 +1,9 @@
 import {Product} from 'src/objects/Product'
 import {Arg, Query, Resolver} from 'type-graphql'
 import {products} from 'src/data/products'
+import {take as _take, drop, sortBy} from 'lodash'
 
+const DEFAULT_TAKE = 5
 
 @Resolver(Product)
 export class ProductResolver {
@@ -21,8 +23,14 @@ export class ProductResolver {
   }
 
   @Query(() => [Product])
-  async products() {
-    return [...this._products]
+  async products(
+    @Arg('offset', {nullable: true}) offset: number = 0,
+    @Arg('take', {nullable: true}) take: number = DEFAULT_TAKE,
+    @Arg('sort', {nullable: true}) sort: boolean = false,
+  ) {
+    const products = sort ? sortBy(this._products, ['score']) : [...this._products]
+
+    return _take(drop(products, offset), take)
   }
 }
 
