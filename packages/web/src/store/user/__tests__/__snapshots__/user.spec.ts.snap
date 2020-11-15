@@ -7,7 +7,7 @@ Array [
   Array [
     "1",
     Object {
-      "discountRate": 10,
+      "amount": 10,
       "id": "1",
       "title": "10% 할인 쿠폰",
       "type": "rate",
@@ -16,32 +16,7 @@ Array [
   Array [
     "2",
     Object {
-      "discountAmount": 10000,
-      "id": "2",
-      "title": "10,000원 할인 쿠폰",
-      "type": "amount",
-    },
-  ],
-]
-`;
-
-exports[`user useUser getCoupon should get on coupon 1`] = `undefined`;
-
-exports[`user useUser requestGetCoupons should request get coupons 1`] = `
-Array [
-  Array [
-    "1",
-    Object {
-      "discountRate": 10,
-      "id": "1",
-      "title": "10% 할인 쿠폰",
-      "type": "rate",
-    },
-  ],
-  Array [
-    "2",
-    Object {
-      "discountAmount": 10000,
+      "amount": 10000,
       "id": "2",
       "title": "10,000원 할인 쿠폰",
       "type": "amount",

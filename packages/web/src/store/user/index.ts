@@ -39,7 +39,15 @@ export const createUser = <TCacheShape>(client: ApolloClient<TCacheShape>) => {
 
   const requestGetCoupons = action(treatRequest(createRequestCoupons(client), {
     done: ({data}) => {
-      addCoupons(data?.coupons)
+      addCoupons(data?.coupons.map(({title, type, discountAmount, discountRate, id}) => {
+
+        return {
+          amount: discountAmount ?? discountRate,
+          id,
+          title,
+          type,
+        }
+      }))
       updateState('idle')
     },
     error: () => updateState('error'),
