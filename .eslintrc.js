@@ -17,7 +17,13 @@ const typescriptRules = {
   '@typescript-eslint/indent': ['error', 2],
   '@typescript-eslint/member-delimiter-style': [
     'error',
-    {multiline: {delimiter: 'none'}, singleline: {delimiter: 'comma'}},
+    {
+      multiline: {
+        delimiter: 'none',
+      },
+      singleline: {
+        delimiter: 'comma',
+      }},
   ],
   '@typescript-eslint/no-array-constructor': 'error',
   '@typescript-eslint/no-dynamic-delete': 'error',
@@ -35,6 +41,9 @@ const typescriptRules = {
 
 const reactRules = {
   'import/order': 'warn',
+  'react-hooks/exhaustive-deps': ['warn', {
+    additionalHooks: 'useRefAct',
+  }],
   'react-hooks/rules-of-hooks': 'off',
   'react/display-name': 'off',
   'react/jsx-child-element-spacing': 'error',
@@ -55,7 +64,11 @@ const reactRules = {
   'react/jsx-props-no-multi-spaces': 'error',
   'react/jsx-sort-default-props': 'warn',
   'react/jsx-sort-props': 'warn',
-  'react/jsx-tag-spacing': ['error', {afterOpening: 'never', beforeSelfClosing: 'never', closingSlash: 'never'}],
+  'react/jsx-tag-spacing': ['error', {
+    afterOpening: 'never',
+    beforeSelfClosing: 'never',
+    closingSlash: 'never',
+  }],
   'react/jsx-uses-react': 'error',
   'react/prop-types': 'off',
   'react/sort-comp': 'warn',
@@ -80,11 +93,11 @@ const uinconRules = {
   'unicorn/filename-case': [
     'error',
     {
-      'cases': {
-        'kebabCase': true,
-        'pascalCase': true,
+      cases: {
+        kebabCase: true,
+        pascalCase: true,
       },
-      'ignore': [
+      ignore: [
         '^UI',
       ],
     },
@@ -135,7 +148,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['*.stories.tsx'],
+      files: ['*.stories.tsx', '*.stories.ts'],
       rules: {
         'no-console': 'off',
         'no-magic-numbers': 'off',
@@ -195,7 +208,7 @@ module.exports = {
     'arrow-spacing': ['error', {after: true, before: true}],
     'block-spacing': ['error', 'always'],
     'brace-style': ['error', '1tbs', {allowSingleLine: true}],
-    'camelcase': ['error', {properties: 'always'}],
+    camelcase: ['error', {properties: 'always'}],
     'capitalized-comments': ['error', 'never'],
     'comma-dangle': ['error', 'always-multiline'],
     'comma-spacing': ['error', {after: true, before: false}],
@@ -203,38 +216,47 @@ module.exports = {
     'computed-property-spacing': ['error', 'never'],
     'eol-last': ['error', 'always'],
     'func-call-spacing': ['error', 'never'],
-    'indent': 'off',
+    indent: 'off',
     'jsx-quotes': ['error', 'prefer-single'],
-    'key-spacing': ['error', {afterColon: true, beforeColon: false, mode: 'strict'}],
+    'key-spacing': ['error', {
+      afterColon: true,
+      beforeColon: false,
+      mode: 'strict',
+    }],
     'keyword-spacing': [
       'error', {
-        'after': true,
-        'before': true,
-        'overrides': {
-          'catch': {
-            'after': true,
+        after: true,
+        before: true,
+        overrides: {
+          catch: {
+            after: true,
           },
-          'for': {
-            'after': true,
+          for: {
+            after: true,
           },
-          'if': {
-            'after': true,
+          if: {
+            after: true,
           },
-          'switch': {
-            'after': true,
+          switch: {
+            after: true,
           },
-          'while': {
-            'after': true,
+          while: {
+            after: true,
           },
         },
       },
     ],
-    'max-depth': ['error', {'max': 4}],
-    'max-len': ['error', {code: 120, ignoreComments: true, ignoreTrailingComments: true, ignoreUrls: true}],
+    'max-depth': ['error', {max: 4}],
+    'max-len': ['error', {
+      code: 120,
+      ignoreComments: true,
+      ignoreTrailingComments: true,
+      ignoreUrls: true,
+    }],
     'max-lines': ['error', 600],
-    'max-nested-callbacks': ['error', {'max': 3}],
-    'max-params': ['error', {'max': 4}],
-    'max-statements-per-line': ['error', {'max': 2}],
+    'max-nested-callbacks': ['error', {max: 3}],
+    'max-params': ['error', {max: 4}],
+    'max-statements-per-line': ['error', {max: 2}],
     'no-alert': 'error',
     'no-await-in-loop': 'error',
     'no-bitwise': 'error',
@@ -261,10 +283,10 @@ module.exports = {
     'no-lone-blocks': 'error',
     'no-lonely-if': 'error',
     'no-loop-func': 'error',
-    'no-magic-numbers': ['error', {'ignore': [0, 1, -1, 2]}],
+    'no-magic-numbers': ['error', {ignore: [0, 1, -1, 2]}],
     'no-multi-assign': 'error',
     'no-multi-str': 'error',
-    'no-multiple-empty-lines': 'error',
+    'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],
     'no-new': 'error',
     'no-new-func': 'error',
     'no-new-object': 'error',
@@ -298,22 +320,23 @@ module.exports = {
     'no-with': 'error',
     'nonblock-statement-body-position': 'error',
     'object-curly-spacing': ['error', 'never'],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'never'],
+    'quote-props': ['error', 'as-needed'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'never'],
     'sort-imports': ['warn', {ignoreCase: true, ignoreDeclarationSort: true}],
     'sort-keys-fix/sort-keys-fix': ['warn', 'asc', {natural: false}],
     'space-before-blocks': [
       'error', {
-        'classes': 'always',
-        'functions': 'always',
-        'keywords': 'always',
+        classes: 'always',
+        functions: 'always',
+        keywords: 'always',
       },
     ],
     'space-before-function-paren': [
       'error', {
-        'anonymous': 'always',
-        'asyncArrow': 'always',
-        'named': 'never',
+        anonymous: 'always',
+        asyncArrow: 'always',
+        named: 'never',
       },
     ],
     'space-in-parens': ['error', 'never'],
