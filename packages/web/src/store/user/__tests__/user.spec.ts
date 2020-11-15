@@ -99,5 +99,16 @@ describe('user', function test() {
 
       expect(result.current.state.coupons.size).toEqual(2)
     })
+    it('should create coupon once', function test() {
+      const {result, rerender} = setupUse()
+
+      const first = result.current
+
+      act(() => {
+        rerender({})
+      })
+
+      expect(result.current).toBe(first)
+    })
   })
 })

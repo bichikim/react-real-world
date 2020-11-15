@@ -8,6 +8,7 @@ import {
   IndexOptions,
 } from 'src/utils/id-list'
 import {v1 as uuid} from 'uuid'
+import {useDeepMemo} from 'src/hooks'
 import {createProducts, products} from '../products'
 import {createUser, user} from '../user'
 import {calculateTotalPrice} from './calulate-total-price'
@@ -132,7 +133,7 @@ export const createCartList = (options: UseCartOptions) => {
   }
 }
 
-export const useCartList = (options?: UseCartOptions) => createCartList(options)
+export const useCartList = (options?: UseCartOptions) => useDeepMemo(() => createCartList(options), options)
 
 export const cartList = createCartList({
   products, user,

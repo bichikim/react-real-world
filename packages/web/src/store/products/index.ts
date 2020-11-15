@@ -1,13 +1,13 @@
 import {ApolloClient, useApolloClient} from '@apollo/client'
 import {GetProductsDocument, GetProductsQuery, GetProductsQueryVariables} from 'api'
 import {action, observable} from 'mobx'
+import {useMemo} from 'react'
 import {LoadingState} from 'src/store/types'
 import {createAddItems, createApolloQuery, createClearItems, createGetItem, treatRequest} from 'src/utils'
 import {client} from 'src/apollo'
 
 export interface Product {
   availableCoupon?: boolean
-  cartID?: string
   coverImage?: string
   id: string
   price: number
@@ -69,5 +69,5 @@ export const products = createProducts(client)
 export const useProducts = () => {
   const client = useApolloClient()
 
-  return createProducts(client)
+  return useMemo(() => createProducts(client), [client])
 }

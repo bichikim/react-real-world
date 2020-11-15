@@ -114,5 +114,16 @@ describe('products', function test() {
 
       expect(result.current.state.products.size).toBe(5)
     })
+    it('should create Products once', function test() {
+      const {result, rerender} = setupUse()
+
+      const first = result.current
+
+      act(() => {
+        rerender({})
+      })
+
+      expect(result.current).toBe(first)
+    })
   })
 })

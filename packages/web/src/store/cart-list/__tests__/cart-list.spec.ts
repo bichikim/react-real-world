@@ -226,5 +226,16 @@ describe('cart-list', function test() {
 
       expect(result.current.state.totalPrice).toBe(product1.price + (product2.price * 2 / 100 * (100 - 10)))
     })
+    it('should create User once', async function test() {
+      const {result, rerender} = await setupUse()
+
+      const first = result.current
+
+      act(() => {
+        rerender({})
+      })
+
+      expect(result.current).toBe(first)
+    })
   })
 })

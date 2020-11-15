@@ -1,6 +1,7 @@
 import {ApolloClient, useApolloClient} from '@apollo/client'
 import {action, observable} from 'mobx'
 import {GetCouponsDocument, GetCouponsQuery, GetCouponsQueryVariables} from 'api'
+import {useMemo} from 'react'
 import {createAddItems, createApolloQuery, createGetItem, treatRequest} from 'src/utils'
 import {LoadingState} from 'src/store/types'
 import {client} from 'src/apollo'
@@ -68,5 +69,5 @@ export const user = createUser(client)
 export const useUser = () => {
   const client = useApolloClient()
 
-  return createUser(client)
+  return useMemo(() => createUser(client), [client])
 }
