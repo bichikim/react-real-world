@@ -1,9 +1,9 @@
-import {action, observable} from 'mobx'
-import {useMemo} from 'react'
-import {createAddItems, createClearItems, createGetItem, memoAction, treatError} from 'src/utils'
 import {ApolloClient, useApolloClient} from '@apollo/client'
-import {GetProductsDocument} from 'api'
+import {GetProductsDocument, GetProductsQuery, GetProductsQueryVariables} from 'api'
+import {action, observable} from 'mobx'
 import {LoadingState} from 'src/store/types'
+import {createAddItems, createApolloQuery, createClearItems, createGetItem, treatRequest} from 'src/utils'
+import {client} from 'src/apollo'
 
 export interface Product {
   availableCoupon?: boolean
@@ -16,58 +16,52 @@ export interface Product {
 }
 
 export interface ProductsState {
-  list: Map<string, Product>
+  products: Map<string, Product>
   state: LoadingState
 }
 
 export const defaultProduct: Partial<Product> = {availableCoupon: true}
 
-export const products = observable<ProductsState>({
-  list: new Map<string, Product>(),
-  state: 'idle',
-})
+export const createProducts = <TCacheShape>(client: ApolloClient<TCacheShape>) => {
 
-interface Pagination {
-  offset?: number
-  sort?: boolean
-  take?: number
-}
+  const state = observable<ProductsState>({
+    products: new Map<string, Product>(),
+    state: 'idle',
+  })
 
-export const createRequestProducts = (client: ApolloClient<any>) => (pagination: Pagination = {}) => {
-  return client.query({query: GetProductsDocument, variables: {...pagination}})
-}
+  const addProducts = action(createAddItems(state.products)())
 
-export const createUseProducts = (products: ProductsState) => () => {
-  const client = useApolloClient()
+  const getProduct = action(createGetItem(state.products))
 
-  const addProducts = memoAction(createAddItems(products.list)())
+  const updateState = action((value: LoadingState) => (state.state = value))
 
-  const getProduct = memoAction(createGetItem(products.list))
+  const clearProducts = action(createClearItems(state.products))
 
-  const updateState = memoAction((state: LoadingState) => (products.state = state))
+  const createRequestProducts =
+    createApolloQuery<GetProductsQueryVariables, GetProductsQuery>(GetProductsDocument)
 
-  const clearProducts = memoAction(createClearItems(products.list))
-
-  const requestProducts = useMemo(() => createRequestProducts(client), [client])
-
-  const requestGetProducts = useMemo(() => action(treatError(async (pagination: Pagination = {}) => {
-    updateState('loading')
-    const {data} = await requestProducts(pagination)
-
-    addProducts(data.products)
-
-    updateState('idle')
-  }, () => {
-    updateState('error')
-  })), [addProducts, updateState, requestProducts])
+  const requestGetProducts = action(treatRequest(createRequestProducts(client), {
+    done: ({data}) => {
+      addProducts(data?.products)
+      updateState('idle')
+    },
+    error: () => updateState('error'),
+    start: () => updateState('loading'),
+  }))
 
   return {
     addProducts,
     clearProducts,
     getProduct,
-    products,
     requestGetProducts,
+    state,
   }
 }
 
-export const useProducts = createUseProducts(products)
+export const products = createProducts(client)
+
+export const useProducts = () => {
+  const client = useApolloClient()
+
+  return createProducts(client)
+}
