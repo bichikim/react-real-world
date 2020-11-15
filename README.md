@@ -34,3 +34,7 @@ yarn test
 ```
 yarn format
 ```
+
+## [Web](./packages/web/README.md)
+
+## [Server](./packages/server/README.md)
