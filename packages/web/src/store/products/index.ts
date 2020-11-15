@@ -42,7 +42,13 @@ export const createProducts = <TCacheShape>(client: ApolloClient<TCacheShape>) =
 
   const requestGetProducts = action(treatRequest(createRequestProducts(client), {
     done: ({data}) => {
-      addProducts(data?.products)
+      addProducts(data?.products.map(({availableCoupon: _availableCoupon, ...rest}) => {
+        const availableCoupon = _availableCoupon === null ? true : _availableCoupon
+        return {
+          ...rest,
+          availableCoupon,
+        }
+      }))
       updateState('idle')
     },
     error: () => updateState('error'),
