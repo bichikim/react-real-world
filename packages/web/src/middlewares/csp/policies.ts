@@ -13,6 +13,7 @@ export const defaultSrc = [
 
 export const styleSrc = [
   _self,
+  // _unsafeInline,
 ]
 
 export const scriptSrc = [
@@ -36,7 +37,6 @@ export const policies = ({apiUrl, nonce}: PoliciesOptions) => {
 
   defaultSrc.push(apiUrl)
   styleSrc.push(`'nonce-${nonce}'`)
-  scriptSrc.push(`'nonce-${nonce}'`)
 
   return {
     directives: {

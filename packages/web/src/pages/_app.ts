@@ -1,14 +1,15 @@
 import {ApolloProvider} from '@apollo/client'
 import {enableMapSet} from 'immer'
+import {cloneDeep} from 'lodash'
 import {DefaultSeo} from 'next-seo'
 import {AppProps} from 'next/app'
 import {Fragment, createElement as h} from 'react'
 import {client} from 'src/apollo'
 import {CommonHead} from 'src/components/CommonHead'
 import {Favicon} from 'src/components/Favicon'
+import {pagePropsContext} from 'src/hooks'
 import {EmptyObject} from 'src/types'
 import {UI} from 'src/ui'
-
 enableMapSet()
 
 /**
@@ -29,7 +30,7 @@ function MyApp(props: AppProps<EmptyObject>) {
     pageProps,
   } = props
 
-  const nonce = props.pageProps?.csp?.nonce
+  const nonce = pageProps?.csp?.nonce
 
   return (
     h(Fragment, null,
@@ -40,12 +41,14 @@ function MyApp(props: AppProps<EmptyObject>) {
           type: 'website',
         },
       }),
-      h(UI, {nonce},
-        h(ApolloProvider, {client},
+      h(pagePropsContext.Provider, {value: cloneDeep(pageProps)},
+        h(UI, {nonce},
+          h(ApolloProvider, {client},
           /**
            * a page component such as src/index/index.ts
            */
-          h(Component, {...pageProps}),
+            h(Component, {...pageProps}),
+          ),
         ),
       ),
     )

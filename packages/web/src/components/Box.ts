@@ -22,6 +22,7 @@ import {
   TypographyProps,
 } from 'styled-system'
 import {createShouldForwardProp, props} from '@styled-system/should-forward-prop'
+import {event, EventProps} from './styles'
 
 interface TransformProps {
   transform?: ResponsiveValue<string>
@@ -32,8 +33,9 @@ const transform = style({
   prop: 'transform',
 })
 
-const StyledBox: FC<PureObject> = styled('div', {shouldForwardProp: createShouldForwardProp([...props, 'transform'])})(
-  color, space, layout, position, shadow, flexbox, grid, typography, transform,
+const StyledBox: FC<PureObject> = styled('div', {
+  shouldForwardProp: createShouldForwardProp([...props, 'transform', 'cursor', 'pointerEvents'])})(
+  color, space, layout, position, shadow, flexbox, grid, typography, transform, event,
 )
 
 export interface ASProps {
@@ -57,7 +59,8 @@ export interface HtmlInputProps<S = any> {
 }
 
 export interface BoxProps<S = any> extends ColorProps, SpaceProps, LayoutProps, PositionProps, ShadowProps,
-  FlexboxProps, GridProps, TypographyProps, HtmlInputProps<S>, HtmlProps, ASProps, ImgProps, TransformProps {
+  FlexboxProps, GridProps, TypographyProps, HtmlInputProps<S>, HtmlProps, ASProps, ImgProps, TransformProps,
+  EventProps {
 }
 
 const ASYNC_WAIT = 45

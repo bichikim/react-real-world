@@ -3,10 +3,11 @@ import {CacheProvider, css, EmotionCache, Global, ThemeProvider} from '@emotion/
 import {UIDReset} from 'react-uid'
 import createCache from '@emotion/cache'
 import {FC, createElement as h, useMemo} from 'react'
+import {usePageProps} from 'src/hooks'
 import {defaultTheme} from './theme'
 
 export interface UIProps {
-  nonce: string
+  nonce?: string
   theme?: any
 }
 
@@ -28,13 +29,31 @@ export const GlobalStyle = () => {
   )
 }
 
-export const UI: FC<UIProps> = (props) => {
-  const {theme = defaultTheme, children, nonce} = props
+const useCache = (nonce) => useMemo(() => (createCache({
+  key: 'css',
+  nonce,
+})), [nonce])
 
-  const cache: EmotionCache = useMemo(() => (createCache({
-    key: 'css',
-    nonce,
-  })), [nonce])
+export const UIDocument: FC<UIProps> = (props) => {
+  const {children, nonce} = props
+
+  const cache: EmotionCache = useCache(nonce)
+
+  return (
+    h(CacheProvider, {value: cache},
+      children,
+    )
+  )
+}
+
+export const UI: FC<UIProps> = (props) => {
+  const {theme = defaultTheme, children, nonce: _nonce} = props
+
+  const pageProps = usePageProps()
+
+  const nonce = pageProps?.csp?.nonce ?? _nonce
+
+  const cache: EmotionCache = useCache(nonce)
 
   return (
     h(CacheProvider, {value: cache},

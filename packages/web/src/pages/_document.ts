@@ -1,8 +1,6 @@
-import Document, {DocumentProps, Html, Main, NextScript} from 'next/document'
-import {Fragment, createElement as h} from 'react'
-import {extractCritical} from '@emotion/server'
-import * as middlewares from 'src/middlewares'
-import {middleware as executeMiddleware} from 'src/middleware'
+import Document, {DocumentProps, Head, Html, Main, NextScript} from 'next/document'
+import {createElement as h} from 'react'
+import {UIDocument} from 'src/ui'
 
 const marginPageProps = (props, pageProps = (props) => (props?.pageProps ?? {})) => {
   const _pageProps = pageProps(props)
@@ -18,19 +16,9 @@ export interface Props extends DocumentProps {
 class CustomDocument extends Document<Props> {
   static async getInitialProps(context) {
     const initialProps = await Document.getInitialProps(context)
-    const pageProps = await executeMiddleware(middlewares, context)
 
-    const styles = extractCritical(initialProps.html)
     return {
       ...initialProps,
-      pageProps,
-      styles: (h(Fragment, null,
-        initialProps.styles,
-        h('style', {
-          dangerouslySetInnerHTML: {__html: styles.css},
-          'data-emotion-css': styles.ids.join(' '),
-        }),
-      )),
     }
   }
 
@@ -39,12 +27,17 @@ class CustomDocument extends Document<Props> {
 
     const lang = pageProps?.language ?? 'ko'
 
+    const nonce = pageProps?.csp?.nonce
+
     return (
       h(Html, {lang},
+        h(Head, {nonce}),
         h('body', null,
-          h(Main),
-          h(NextScript),
+          h(UIDocument, {nonce},
+            h(Main),
+          ),
         ),
+        h(NextScript),
       )
     )
   }
