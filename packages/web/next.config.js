@@ -1,38 +1,38 @@
-const {resolve} = require('path')
-const withImages = require('next-images')
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const path = require('path')
+const images = require('next-images')
+const bundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const withPlugins = require('next-compose-plugins')
 
-
-const withTM = require('next-transpile-modules')([
+const transpileModules = require('next-transpile-modules')([
   'lodash-es',
   'api',
 ])
 
-const config = withBundleAnalyzer(withImages({
+const config = withPlugins([images, transpileModules, bundleAnalyzer], {
   env: {
   },
   webpack(config, {defaultLoaders}) {
-    // fix for trying load .md fire in middleware and boot
+    // fix for trying load .md fire in middlewares and boot
     config.module.noParse = /.md$/
 
     if (!defaultLoaders.babel.options.plugins) {
       defaultLoaders.babel.options.plugins = []
     }
     // tree-shacking helper
-    defaultLoaders.babel.options.plugins.push(['import', {
-      'libraryName': 'antd',
-      'style': true,
-    }])
+    // defaultLoaders.babel.options.plugins.push(['import', {
+    // }])
+    //
+    // defaultLoaders.babel.options.plugins.push(['@emotion'])
 
     // alias
-    config.resolve.alias['src'] = resolve(__dirname, 'src')
-    config.resolve.alias['api'] = resolve(__dirname, 'api')
-    config.resolve.alias['assets'] = resolve(__dirname, 'src/assets')
+    config.resolve.alias['src'] = path.resolve(__dirname, 'src')
+    config.resolve.alias['api'] = path.resolve(__dirname, 'api')
+    config.resolve.alias['assets'] = path.resolve(__dirname, 'src/assets')
 
     return config
   },
-}))
+})
 
-module.exports = withTM(config)
+module.exports = config
