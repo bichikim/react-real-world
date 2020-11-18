@@ -5,8 +5,8 @@
   "scripts": {
     "build": "ttsc --outDir ./dist -p tsconfig.bundle.json",
     "dev": "cross-env NODE_ENV=development ts-node-dev -C ttypescript -P tsconfig.bundle.json src/index.ts --transpile-only",
-    "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
-    "format": "gulp format"
+    "format": "gulp format",
+    "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts"
   },
   "dependencies": {
     "apollo-server": "^2.19.0",
