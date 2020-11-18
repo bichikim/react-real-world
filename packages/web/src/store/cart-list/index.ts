@@ -133,7 +133,7 @@ export const createCartList = (options: UseCartOptions) => {
   }
 }
 
-export const useCartList = (options?: UseCartOptions) => {
+export const useCartList = (options: Partial<UseCartOptions> = {}) => {
   const {max, products: _products = products, user: _user = user} = options
 
   return useMemo(() => createCartList({max, products: _products, user: _user}), [max, _products, _user])
