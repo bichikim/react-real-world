@@ -1,11 +1,15 @@
-import  {AppProps} from 'next/app'
-import {Fragment, createElement as h} from 'react'
-import {DefaultSeo} from 'next-seo'
 import {ApolloProvider} from '@apollo/client'
+import {enableMapSet} from 'immer'
+import {DefaultSeo} from 'next-seo'
+import {AppProps} from 'next/app'
+import {Fragment, createElement as h} from 'react'
 import {client} from 'src/apollo'
-import {EmptyObject} from 'src/types'
-import {Favicon} from 'src/components/Favicon'
 import {CommonHead} from 'src/components/CommonHead'
+import {Favicon} from 'src/components/Favicon'
+import {EmptyObject} from 'src/types'
+import {UI} from 'src/ui'
+
+enableMapSet()
 
 /**
  * custom App
@@ -25,6 +29,8 @@ function MyApp(props: AppProps<EmptyObject>) {
     pageProps,
   } = props
 
+  const nonce = props.pageProps?.csp?.nonce
+
   return (
     h(Fragment, null,
       h(CommonHead),
@@ -34,11 +40,13 @@ function MyApp(props: AppProps<EmptyObject>) {
           type: 'website',
         },
       }),
-      h(ApolloProvider, {client},
-        /**
-         * a page component such as src/index/index.ts
-         */
-        h(Component, {...pageProps}),
+      h(UI, {nonce},
+        h(ApolloProvider, {client},
+          /**
+           * a page component such as src/index/index.ts
+           */
+          h(Component, {...pageProps}),
+        ),
       ),
     )
   )
