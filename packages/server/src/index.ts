@@ -19,7 +19,10 @@ async function start({emitSchemaFile = true, port = DEFAULT_PORT}: StartOptions 
     resolvers,
   })
 
-  const server = new ApolloServer({schema})
+  const server = new ApolloServer({cors: {
+    credentials: true,
+    origin: process.env.NODE_ENV === 'production' ? '' : '*',
+  }, schema})
 
   if (emitSchemaFile) {
     return
@@ -27,7 +30,6 @@ async function start({emitSchemaFile = true, port = DEFAULT_PORT}: StartOptions 
 
   return server.listen({port})
 }
-
 
 start({
   emitSchemaFile: process.env.NODE_ENV === 'generate',
