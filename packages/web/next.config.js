@@ -20,11 +20,6 @@ const config = withPlugins([images, transpileModules, bundleAnalyzer], {
     if (!defaultLoaders.babel.options.plugins) {
       defaultLoaders.babel.options.plugins = []
     }
-    // tree-shacking helper
-    // defaultLoaders.babel.options.plugins.push(['import', {
-    // }])
-    //
-    // defaultLoaders.babel.options.plugins.push(['@emotion'])
 
     // alias
     config.resolve.alias['src'] = path.resolve(__dirname, 'src')
