@@ -26,11 +26,11 @@ describe('object-storage', function test() {
       localStorage.setItem(key, JSON.stringify(data))
       sessionStorage.setItem(key, JSON.stringify(data))
       {
-        const result = getStorageValue('local')(key)
+        const result = getStorageValue('local')(key)()
         expect(result).toEqual(data)
       }
       {
-        const result = getStorageValue('session')(key)
+        const result = getStorageValue('session')(key)()
         expect(result).toEqual(data)
       }
     })
