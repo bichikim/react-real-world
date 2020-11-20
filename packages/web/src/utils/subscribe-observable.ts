@@ -7,16 +7,16 @@ export interface SubscribeObservableOptions<T> {
   init?: (state: T) => any
 }
 
-export const subscribeObservable = <T>(
+export const subscribeObservable = <T = any>(
   state: T, options: CreateObservableOptions = {},
-) => (subscribeOptions: SubscribeObservableOptions<T> = {}) => {
+) => (subscribeOptions: SubscribeObservableOptions<T> = {}): T => {
   const {
     init,
     changed,
     deepKeys,
   } = subscribeOptions
 
-  const _state = observable(state, options as any)
+  const _state = observable<T>(state, options as any)
 
   if (init) {
     init(_state)
