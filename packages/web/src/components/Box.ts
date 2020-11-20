@@ -18,14 +18,16 @@ import {
   space,
   SpaceProps,
   style,
+  Theme,
   typography,
   TypographyProps,
 } from 'styled-system'
 import {createShouldForwardProp, props} from '@styled-system/should-forward-prop'
+import {Property} from 'csstype'
 import {event, EventProps} from './styles'
 
-interface TransformProps {
-  transform?: ResponsiveValue<string>
+interface TransformProps<T extends Theme = Theme> {
+  transform?: ResponsiveValue<string, T>
 }
 
 const transform = style({
@@ -33,9 +35,27 @@ const transform = style({
   prop: 'transform',
 })
 
+interface userSelectProps<T extends Theme = Theme> {
+  userSelect?: ResponsiveValue<Property.UserSelect, T>
+}
+
+const userSelect = style({
+  cssProperty: 'userSelect',
+  prop: 'userSelect',
+})
+
+interface TextDecorationProps<T extends Theme = Theme> {
+  textDecoration?: ResponsiveValue<Property.TextDecoration, T>
+}
+
+const textDecoration = style({
+  cssProperty: 'textDecoration',
+  prop: 'textDecoration',
+})
+
 const StyledBox: FC<PureObject> = styled('div', {
   shouldForwardProp: createShouldForwardProp([...props, 'transform', 'cursor', 'pointerEvents'])})(
-  color, space, layout, position, shadow, flexbox, grid, typography, transform, event,
+  color, space, layout, position, shadow, flexbox, grid, typography, transform, event, textDecoration, userSelect,
 )
 
 export interface ASProps {
@@ -61,7 +81,7 @@ export interface HtmlInputProps<S = any> {
 
 export interface BoxProps<S = any> extends ColorProps, SpaceProps, LayoutProps, PositionProps, ShadowProps,
   FlexboxProps, GridProps, TypographyProps, HtmlInputProps<S>, HtmlProps, ASProps, ImgProps, TransformProps,
-  EventProps {
+  EventProps, TextDecorationProps, userSelectProps {
 }
 
 const ASYNC_WAIT = 45
