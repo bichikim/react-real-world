@@ -1,18 +1,24 @@
-import {FC, createElement as h} from 'react'
-import {Box} from './Box'
-// import {useTheme} from '@emotion/react'
+import {FC, createElement as h, useMemo} from 'react'
+import {Box, BoxProps} from './Box'
 
-export interface ImgProps {
+export interface ImgProps extends BoxProps {
+  sizeList?: string[]
   src?: string
 }
 
-export const Img: FC<ImgProps> = (props) => {
-  const {src, ...rest} = props
+const DEFAULT_SIZE_LIST = ['375', '750', '960', '1440', '2048']
 
-  // const theme = useTheme()
+export const Img: FC<ImgProps> = (props) => {
+  const {src, sizeList = DEFAULT_SIZE_LIST, ...rest} = props
+
+  const srcSet = useMemo(() => {
+    return sizeList.map((size) => {
+      return `${src}/${size}xauto ${size}w`
+    }).join(', ')
+  }, [sizeList, src])
 
   return (
-    h(Box, {...rest, as: 'img', src},
+    h(Box, {...rest, as: 'img', src, srcSet},
     )
   )
 }
