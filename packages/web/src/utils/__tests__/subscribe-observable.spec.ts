@@ -6,7 +6,9 @@ describe('subscribe-observable', function test() {
     const state = subscribeObservable({
       foo: 'foo',
     })({
-      init: () => ({foo: 'bar'}),
+      init: (state) => {
+        state.foo = 'bar'
+      },
     })
 
     expect(state).toEqual({foo: 'bar'})
