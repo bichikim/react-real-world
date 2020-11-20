@@ -15,7 +15,12 @@ export const getTotalPrice = (cartList: Map<string, CartItem>, products: Map<str
 
   cartList.forEach((item) => {
     const myItem = defaults(item, defaultItem)
-    const {amount} = myItem
+    const {amount, purchase} = myItem
+
+    if (!purchase) {
+      return
+    }
+
     const {price, availableCoupon} = defaults(products.get(getProductId(myItem)), defaultProduct)
 
     const total = price * amount

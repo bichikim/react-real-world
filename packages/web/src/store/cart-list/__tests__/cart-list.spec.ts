@@ -1,6 +1,6 @@
 import {ApolloProvider} from '@apollo/client'
-import {createProducts} from 'src/store/products'
-import {createUser} from 'src/store/user'
+import {createProducts, products} from 'src/store/products'
+import {createUser, user} from 'src/store/user'
 import {client} from 'src/__tests__/apollo-clinet-for-testing'
 import productsDataMock from 'src/store/products/__tests__/porducts.json'
 import couponsDataMock from 'src/store/user/__tests__/coupons.json'
@@ -25,17 +25,13 @@ const setup = async () => {
 }
 
 const setupUse = async () => {
-  const products = createProducts(client)
   fetchMock.mockResponseOnce(JSON.stringify(productsDataMock))
   await products.requestGetProducts({})
 
-  const user = createUser(client)
   fetchMock.mockResponseOnce(JSON.stringify(couponsDataMock))
   await user.requestGetCoupons({})
 
-  const wrapper = renderHook(() => (useCartList({
-    products, user,
-  })), {
+  const wrapper = renderHook(() => (useCartList()), {
     wrapper: (props) => (h(ApolloProvider, {client}, props.children)),
   })
 
@@ -70,6 +66,7 @@ describe('cart-list', function test() {
         cartList.putProductInCart(product.id)
 
         expect(cartList.state.cartList.size).toBe(1)
+        expect(cartList.state.totalCount).toBe(1)
 
         {
           const cartItem = cartList.state.cartList.values().next().value
@@ -119,6 +116,7 @@ describe('cart-list', function test() {
         cartList.putProductInCart(product.id, -2)
 
         expect(cartList.state.cartList.size).toBe(0)
+        expect(cartList.state.totalCount).toBe(0)
       })
       it('should not put with negative amount', async function test() {
         const {cartList, products} = await setup()
@@ -145,11 +143,18 @@ describe('cart-list', function test() {
           {amount: 2, productID: product2.id},
         ])
 
+        expect(cartList.state.totalPrice).toBe(0)
+
+        const iterableCartList = cartList.state.cartList.values()
+
+        cartList.updateCartPurchase(iterableCartList.next().value.id, true)
+        cartList.updateCartPurchase(iterableCartList.next().value.id, true)
+
         expect(cartList.state.totalPrice).toBe(product1.price + product2.price * 2)
 
         const coupon = user.state.coupons.values().next().value
 
-        cartList.addCoupon(coupon.id)
+        cartList.addCoupon(coupon.id, true)
 
         expect(cartList.state.totalPrice).toBe(product1.price + (product2.price * 2 / 100 * (100 - 10)))
       })
@@ -189,8 +194,8 @@ describe('cart-list', function test() {
 
         {
 
-          const cartItem1 = cartList.getCartItemByProductID(product1.id)
-          const cartItem2 = cartList.getCartItemByProductID(product2.id)
+          const cartItem1 = cartList.state.getCartItemByProductID(product1.id)
+          const cartItem2 = cartList.state.getCartItemByProductID(product2.id)
 
           expect(cartItem1.productID).toEqual(product1.id)
           expect(cartItem2.productID).toEqual(product2.id)
@@ -216,12 +221,17 @@ describe('cart-list', function test() {
         ])
       })
 
+      const iterableCartList = result.current.state.cartList.values()
+
+      result.current.updateCartPurchase(iterableCartList.next().value.id, true)
+      result.current.updateCartPurchase(iterableCartList.next().value.id, true)
+
       expect(result.current.state.totalPrice).toBe(product1.price + product2.price * 2)
 
       const coupon = user.state.coupons.values().next().value
 
       act(() => {
-        result.current.addCoupon(coupon.id)
+        result.current.addCoupon(coupon.id, true)
       })
 
       expect(result.current.state.totalPrice).toBe(product1.price + (product2.price * 2 / 100 * (100 - 10)))

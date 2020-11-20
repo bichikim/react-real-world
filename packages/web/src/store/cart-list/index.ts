@@ -1,5 +1,5 @@
-import {action, observable} from 'mobx'
-import {useMemo} from 'react'
+import {action} from 'mobx'
+import {getStorageValue, saveStorageValue, subscribeObservable} from 'src/utils'
 import {
   createGetItem,
   createGetItemByIndex,
@@ -9,6 +9,7 @@ import {
   IndexOptions,
 } from 'src/utils/id-list'
 import {v1 as uuid} from 'uuid'
+import {debounce} from 'lodash'
 import {createProducts, products} from '../products'
 import {createUser, user} from '../user'
 import {calculateTotalPrice} from './calulate-total-price'
@@ -30,7 +31,10 @@ export interface CartItem {
 export interface CartsState {
   cartList: Map<string, CartItem>
   couponID: string | null
+  getCartItem: (id: string) => CartItem | undefined
+  getCartItemByProductID: (productID: string) => CartItem
   productIDIndexList: Map<any, string>
+  readonly totalCount: number
   readonly totalPrice: number
 }
 
@@ -51,15 +55,67 @@ interface AmountInfo {
   productID: string
 }
 
+const saveStorage = saveStorageValue('session')('cart-list')
+const getStorage = getStorageValue('session')('cart-list')
+
+const DEFAULT_SAVE_WAIT = 250
+
+const saveCartList = debounce((state: CartsState) => {
+
+  const {cartList, productIDIndexList, couponID} = state
+  saveStorage({
+    cartList: [...cartList.entries()],
+    couponID,
+    productIDIndexList: [...productIDIndexList.entries()],
+  })
+}, DEFAULT_SAVE_WAIT)
+
 export const createCartList = (options: UseCartOptions) => {
   const {max = DEFAULT_MAX, products, user} = options
 
-  const state = observable<CartsState>({
+  const state = subscribeObservable<CartsState>({
     cartList: new Map<string, CartItem>(),
     couponID: null,
+    get getCartItem() {
+      return createGetItem(state.cartList)
+    },
+    get getCartItemByProductID() {
+      return createGetItemByIndex<CartItem>(state.cartList, {
+        indexList: this.productIDIndexList,
+        name: 'productID',
+      })
+    },
     productIDIndexList: new Map<any, string>(),
+    get totalCount() {
+      return state.cartList.size
+    },
     get totalPrice() {
       return calculateTotalPrice(state.cartList, products.state.products, [user.getCoupon(state.couponID)])
+    },
+  })({
+    changed: (state) => {
+      saveCartList(state)
+    },
+    deepKeys: ['cartList', 'productIDIndexList'],
+    init(state) {
+      const {cartList, productIDIndexList, couponID} = getStorage()
+      setTimeout(() => {
+
+        state.couponID = couponID
+
+        if (Array.isArray(cartList)) {
+          cartList.forEach(([id, item]) => {
+            state.cartList.set(id, item)
+          })
+        }
+
+        if (Array.isArray(productIDIndexList)) {
+          productIDIndexList.forEach(([id, item]) => {
+            state.productIDIndexList.set(id, item)
+          })
+        }
+      }, DEFAULT_SAVE_WAIT)
+
     },
   })
 
@@ -68,26 +124,21 @@ export const createCartList = (options: UseCartOptions) => {
     name: 'productID',
   }
 
-  const addCoupon = action((coupon: string) => {
-    state.couponID = coupon
+  const addCoupon = action((couponID: string, value: boolean) => {
+    if (state.couponID === couponID && !value) {
+      state.couponID = null
+      return
+    }
+
+    state.couponID = couponID
   })
 
   const addCartItem = action(createMaxAddItem(max)(state.cartList, indexOptions)())
 
-  const getCartItemByProductID = action(createGetItemByIndex(state.cartList, indexOptions))
+  const updateCartAmount = action((cartID: string, amount: number = 1) => {
+    const cartItem = state.getCartItem(cartID)
 
-  const putProductInCart = action((productID: string, amount: number = 1) => {
-    const cartItem = getCartItemByProductID(productID)
-
-    if (!cartItem && amount > 0) {
-      addCartItem({
-        amount,
-        id: uuid(),
-        productID,
-        purchase: false,
-      })
-      return
-    } else if (!cartItem) {
+    if (!cartItem) {
       return
     }
 
@@ -101,8 +152,38 @@ export const createCartList = (options: UseCartOptions) => {
     addCartItem({...cartItem, amount: newAmount})
   })
 
+  const updateCartPurchase = action((cartID: string, value: boolean) => {
+
+    const cartItem = state.getCartItem(cartID)
+
+    if (!cartItem) {
+      return
+    }
+
+    addCartItem({...cartItem, purchase: value})
+  })
+
+  const putProductInCart = action((productID: string, amount: number = 1) => {
+
+    const cartItem = state.getCartItemByProductID(productID)
+
+    if (!cartItem && amount > 0) {
+      addCartItem({
+        amount,
+        id: uuid(),
+        productID,
+        purchase: false,
+      })
+      return
+    } else if (!cartItem) {
+      return
+    }
+
+    updateCartAmount(cartItem.id, amount)
+  })
+
   const removeCartItemByProductID = action((productID) => {
-    const cartItem = getCartItemByProductID(productID)
+    const cartItem = state.getCartItemByProductID(productID)
 
     if (cartItem) {
       removeCartItem(cartItem.id)
@@ -115,30 +196,26 @@ export const createCartList = (options: UseCartOptions) => {
 
   const removeCartItem = action(createRemoveItem(state.cartList, indexOptions))
 
-  const getCartItem = action(createGetItem(state.cartList))
-
   const addCartList = action(createMaxAddItems(max)(state.cartList, indexOptions))
 
   return {
     addCartItem,
     addCartList,
     addCoupon,
-    getCartItem,
-    getCartItemByProductID,
     putProductInCart,
     putProductsInCart,
     removeCartItem,
     removeCartItemByProductID,
     state,
+    updateCartAmount,
+    updateCartPurchase,
   }
-}
-
-export const useCartList = (options: Partial<UseCartOptions> = {}) => {
-  const {max, products: _products = products, user: _user = user} = options
-
-  return useMemo(() => createCartList({max, products: _products, user: _user}), [max, _products, _user])
 }
 
 export const cartList = createCartList({
   products, user,
 })
+
+export const useCartList = () => {
+  return cartList
+}
