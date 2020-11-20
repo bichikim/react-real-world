@@ -20,6 +20,7 @@ export const createClient = (uri: string) => {
     link: createHttpLink({
       uri,
     }),
+    ssrMode: true,
   })
 }
 
