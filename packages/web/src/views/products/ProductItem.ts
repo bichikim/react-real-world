@@ -7,7 +7,7 @@ import {Img} from 'src/components/Img'
 export interface ProductItemProps extends Product {
   hasCart?: boolean
   onChange?: (value: boolean) => any
-  onChangeCart?: (id: string) => any
+  onChangeCart?: (id: string, amount?: number) => any
   value?: boolean
 }
 
@@ -144,11 +144,11 @@ export const ProductItem: FC<ProductItemProps> = (props) => {
   const {title, availableCoupon, price, coverImage, onChangeCart, id, hasCart} = props
 
   const handleAddCart = useCallback(() => {
-    onChangeCart?.(id, hasCart ? -1 : 1)
+    onChangeCart?.(id, hasCart ? -10000 : 1)
   }, [onChangeCart, id, hasCart])
 
   return (
-    h(ProductContainer, {},
+    h(ProductContainer, null,
       h(CoverImage, {src: coverImage}),
       h(InfoContainer, null,
         h(Price, null, price),
