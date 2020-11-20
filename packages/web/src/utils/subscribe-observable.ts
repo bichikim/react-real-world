@@ -3,7 +3,8 @@ import {CreateObservableOptions} from 'mobx/src/api/observable'
 
 export interface SubscribeObservableOptions<T> {
   changed?: (state: T) => any
-  init?: () => Partial<T>
+  deepKeys?: string[]
+  init?: (state: T) => any
 }
 
 export const subscribeObservable = <T>(
@@ -12,18 +13,28 @@ export const subscribeObservable = <T>(
   const {
     init,
     changed,
+    deepKeys,
   } = subscribeOptions
 
   const _state = observable(state, options as any)
 
   if (init) {
-    Object.assign(_state, init())
+    init(_state)
   }
 
   if (changed) {
-    observe(_state, (value) => {
-      changed(value.object)
+    observe(_state, () => {
+      changed(_state)
     })
+
+    if (deepKeys) {
+      deepKeys.forEach((key) => {
+        observe(_state[key], () => {
+          changed(_state)
+        })
+      })
+    }
+
     changed(_state)
   }
 
