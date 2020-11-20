@@ -15,8 +15,6 @@ exports[`Box should render it 1`] = `
 
 <div
   class="emotion-0"
-  display="grid"
-  size="10"
   value=""
 />
 `;
