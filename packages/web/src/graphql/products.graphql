@@ -1,10 +1,15 @@
-query getProducts ($take: Float, $offset: Float, $sort: Boolean) {
-  products(take: $take, offset: $offset, sort: $sort) {
-    id,
-    title,
-    coverImage,
-    price,
-    score,
-    availableCoupon,
+query getProducts ($take: Float, $offset: Float, $sort: Boolean, $timestamp: Float) {
+  products(take: $take, offset: $offset, sort: $sort, timestamp: $timestamp) {
+    list {
+      id
+      title
+      coverImage
+      price
+      score
+      availableCoupon
+    }
+    offset
+    take
+    timestamp
   }
 }
