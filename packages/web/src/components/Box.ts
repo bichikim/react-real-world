@@ -50,6 +50,7 @@ export interface HtmlProps {
 
 export interface ImgProps {
   src?: string
+  srcSet?: string
 }
 
 export interface HtmlInputProps<S = any> {
