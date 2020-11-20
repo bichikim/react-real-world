@@ -15,6 +15,7 @@ const system: Interpolation<any> = {
   '*': {
     backgroundColor: 'transparent',
     border: 0,
+    boxSizing: 'border-box',
     margin: 0,
     outline: '0 !important',
     padding: 0,
