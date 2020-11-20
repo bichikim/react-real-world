@@ -65,12 +65,13 @@ export const createProducts = <TCacheShape>(client: ApolloClient<TCacheShape>) =
     deepKeys: ['products'],
     init(state) {
       const {products} = getStorage()
-
-      if (Array.isArray(products)) {
-        products.forEach(([key, item]) => {
-          state.products.set(key, item)
-        })
-      }
+      setTimeout(() => {
+        if (Array.isArray(products)) {
+          products.forEach(([key, item]) => {
+            state.products.set(key, item)
+          })
+        }
+      }, DEFAULT_SAVE_WAIT)
     },
   })
 
