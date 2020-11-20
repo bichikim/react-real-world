@@ -88,7 +88,7 @@ describe('products', function test() {
 
     describe('getProduct', function test() {
       it('should get one product', async function test() {
-        const {state, requestGetProducts, getProduct} = setup()
+        const {state, requestGetProducts} = setup()
 
         expect(state.products.size).toBe(0)
 
@@ -98,7 +98,7 @@ describe('products', function test() {
 
         await flush()
 
-        expect(getProduct('tpP45lSwqf1X1yEEFqL4')).toMatchSnapshot()
+        expect(state.getProduct('tpP45lSwqf1X1yEEFqL4')).toMatchSnapshot()
       })
     })
   })

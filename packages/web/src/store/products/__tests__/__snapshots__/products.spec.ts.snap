@@ -15,7 +15,7 @@ exports[`products createProducts requestGetProducts should request products 1`] 
 Array [
   "http://localhost:9090",
   Object {
-    "body": "{\\"operationName\\":\\"getProducts\\",\\"variables\\":{},\\"query\\":\\"query getProducts($take: Float, $offset: Float, $sort: Boolean) {\\\\n  products(take: $take, offset: $offset, sort: $sort) {\\\\n    id\\\\n    title\\\\n    coverImage\\\\n    price\\\\n    score\\\\n    availableCoupon\\\\n    __typename\\\\n  }\\\\n}\\\\n\\"}",
+    "body": "{\\"operationName\\":\\"getProducts\\",\\"variables\\":{\\"offset\\":0,\\"take\\":5,\\"timestamp\\":1605837922666},\\"query\\":\\"query getProducts($take: Float, $offset: Float, $sort: Boolean, $timestamp: Float) {\\\\n  products(take: $take, offset: $offset, sort: $sort, timestamp: $timestamp) {\\\\n    list {\\\\n      id\\\\n      title\\\\n      coverImage\\\\n      price\\\\n      score\\\\n      availableCoupon\\\\n      __typename\\\\n    }\\\\n    offset\\\\n    take\\\\n    timestamp\\\\n    __typename\\\\n  }\\\\n}\\\\n\\"}",
     "credentials": undefined,
     "headers": Object {
       "accept": "*/*",

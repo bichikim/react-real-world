@@ -1,46 +1,50 @@
 {
   "data": {
-    "products": [
-      {
-        "id": "gGFsFvhrKlvZpjLRfmNY",
-        "title": "디지털로 만들어내는 아날로그 감성, 해란의 아이패드 드로잉",
-        "score": 220,
-        "coverImage": "https://cdn.class101.net/images/cbadec97-d306-4669-bbcf-eef5d1a9d261",
-        "price": 230000,
-        "availableCoupon": null
-      },
-      {
-        "id": "81x83ysiEHsHCBoeVh2O",
-        "title": "글씨가 주는 소소한 행복, Lettering Together!",
-        "score": 300,
-        "coverImage": "https://cdn.class101.net/images/ec0f0c15-aeec-43a3-a0c9-b649b0999f0a",
-        "price": 320000,
-        "availableCoupon": null
-      },
-      {
-        "id": "4tVyp15jKUO6sfUvLnBc",
-        "title": "또 다른 나를 그리다, 동글의 아이패드 캐릭터 드로잉",
-        "score": 300,
-        "coverImage": "https://cdn.class101.net/images/0a6a86b9-f1ed-4b90-9d53-cbbb0413989d",
-        "price": 345000,
-        "availableCoupon": false
-      },
-      {
-        "id": "CNCwXwHP7FUip83z5VEH",
-        "title": "평범한 일상에 색을 더하는 시간, 자토의 아이패드 드로잉",
-        "score": 300,
-        "coverImage": "https://cdn.class101.net/images/9e7be50d-72f1-4c93-80d6-c6b95b42bd40",
-        "price": 50000,
-        "availableCoupon": null
-      },
-      {
-        "id": "ZXV8mCcvbpXKm5J5snUq",
-        "title": "붓펜으로 그려낸 보통날, 보통의 글씨",
-        "score": 350,
-        "coverImage": "https://cdn.class101.net/images/a363a069-5aaf-40cb-822e-a2cab585c37e",
-        "price": 240000,
-        "availableCoupon": null
-      }
-    ]
+    "products": {
+      "list": [
+        {
+          "id": "gGFsFvhrKlvZpjLRfmNY",
+          "title": "디지털로 만들어내는 아날로그 감성, 해란의 아이패드 드로잉",
+          "score": 220,
+          "coverImage": "https://cdn.class101.net/images/cbadec97-d306-4669-bbcf-eef5d1a9d261",
+          "price": 230000,
+          "availableCoupon": null
+        },
+        {
+          "id": "81x83ysiEHsHCBoeVh2O",
+          "title": "글씨가 주는 소소한 행복, Lettering Together!",
+          "score": 300,
+          "coverImage": "https://cdn.class101.net/images/ec0f0c15-aeec-43a3-a0c9-b649b0999f0a",
+          "price": 320000,
+          "availableCoupon": null
+        },
+        {
+          "id": "4tVyp15jKUO6sfUvLnBc",
+          "title": "또 다른 나를 그리다, 동글의 아이패드 캐릭터 드로잉",
+          "score": 300,
+          "coverImage": "https://cdn.class101.net/images/0a6a86b9-f1ed-4b90-9d53-cbbb0413989d",
+          "price": 345000,
+          "availableCoupon": false
+        },
+        {
+          "id": "CNCwXwHP7FUip83z5VEH",
+          "title": "평범한 일상에 색을 더하는 시간, 자토의 아이패드 드로잉",
+          "score": 300,
+          "coverImage": "https://cdn.class101.net/images/9e7be50d-72f1-4c93-80d6-c6b95b42bd40",
+          "price": 50000,
+          "availableCoupon": null
+        },
+        {
+          "id": "ZXV8mCcvbpXKm5J5snUq",
+          "title": "붓펜으로 그려낸 보통날, 보통의 글씨",
+          "score": 350,
+          "coverImage": "https://cdn.class101.net/images/a363a069-5aaf-40cb-822e-a2cab585c37e",
+          "price": 240000,
+          "availableCoupon": null
+        }
+      ],
+      "offset": 5,
+      "take": 5
+    }
   }
 }
