@@ -1,51 +1,62 @@
 import {observer} from 'mobx-react-lite'
-import {FC, createElement as h, useCallback, useEffect} from 'react'
+import {FC, createElement as h, useCallback} from 'react'
 import {Box} from 'src/components/Box'
-import {useProducts} from 'src/store/products'
+import {Product, useProducts} from 'src/store/products'
 import {useCartList} from 'src/store/cart-list'
-import {useImmer} from 'use-immer'
-import {ProductList, SelectState} from './ProductList'
+import {useOnce} from 'src/hooks'
+import {ProductAndCart, ProductList} from './ProductList'
 
-export const ProductsPage: FC = observer(() => {
-  const [localState, updateState] = useImmer(() => {
-    const selects = new Set<string>()
+interface ProductsPageProps {
+  offset: number
+  products: ([string, Product])[]
+  timestamp: number
+}
 
-    return {
-      selects,
-    }
+export const ProductsPage: FC<ProductsPageProps> = observer((props) => {
+
+  const {state, requestGetProducts, updatePagination, addProducts} = useProducts()
+
+  useOnce(() => {
+    const {products, timestamp, offset} = props
+    addProducts(products)
+    updatePagination({offset, timestamp})
   })
 
-  const updateSelects = useCallback(({key, value}: SelectState) => {
-    updateState((draft) => {
-      if (value) {
-        draft.selects.add(key)
-      } else {
-        draft.selects.delete(key)
-      }
-    })
-  }, [updateState])
+  const {products, state: loadState} = state
 
-  const {requestGetProducts, state: {products, state}} = useProducts()
+  const {putProductInCart, state: {getCartItemByProductID}} = useCartList()
 
-  const {putProductInCart} = useCartList()
+  const showMoreText = loadState === 'loading' ? 'loading...' : 'show more'
 
-  const showLoading = state === 'loading'
+  const productsList: ([string, ProductAndCart])[] = [...products].map(([key, item]) => {
+    const newItem = {
+      ...item,
+      hasCart: Boolean(getCartItemByProductID(key)),
+    }
+    return [key, newItem]
+  })
 
-  useEffect(() => {
-    requestGetProducts({})
+  const handleLoadMore = useCallback(() => {
+    return requestGetProducts({})
   }, [requestGetProducts])
 
   return (
-    h(Box, {maxWidth: 1025, mx: 'auto'},
-      h(Box, {fontSize: '20px', p: 10}, 'Production'),
+    h(Box, null,
       h(ProductList, {
-        list: products,
-        onAddCart: putProductInCart,
-        onSelects: updateSelects,
-        selects: localState.selects,
+        list: productsList,
+        onChangeCart: putProductInCart,
       }),
-      h(Box, {bg: 'black', color: 'white', fontSize: '20px', p: 10, textAlign: 'center'}, 'show more'),
-      showLoading && 'loading',
+      h(Box, {
+        bg: 'black',
+        color: 'white',
+        cursor: 'pointer',
+        fontSize: '20px',
+        onClick: handleLoadMore,
+        p: 10,
+        textAlign: 'center',
+      }, showMoreText),
     )
   )
 })
+
+ProductsPage.displayName = 'ProductsPage'

@@ -2,10 +2,12 @@
 import {FC, createElement as h, useCallback} from 'react'
 import {Box} from 'src/components/Box'
 import {Product} from 'src/store/products'
+import {Img} from 'src/components/Img'
 
 export interface ProductItemProps extends Product {
-  onAddCart?: (id: string) => any
+  hasCart?: boolean
   onChange?: (value: boolean) => any
+  onChangeCart?: (id: string) => any
   value?: boolean
 }
 
@@ -31,14 +33,10 @@ const CoverImage: FC<{src: string}> = ({src}) => {
       top: 0,
       width: '100%',
     },
-    h(Box, {
-      as: 'img',
-      left: '50%',
-      position: 'absolute',
+    h(Img, {
+      height: 'auto',
       src,
-      top: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: ['auto', '100%'],
+      width: '100%',
     }),
     )
   )
@@ -105,28 +103,22 @@ const Price: FC = ({children}) => {
   )
 }
 
-const CheckBox: FC<{value: boolean}> = ({value}) => {
-
-  return (
-    h(Box, {
-      as: 'input',
-      checked: value,
-      height: 20,
-      m: 10,
-      position: 'relative',
-      type: 'checkbox',
-      width: 20,
-    })
-  )
+interface AddCartProps {
+  coupon?: boolean
+  hasCart?: boolean
+  onClick?: () => any
 }
 
-const AddCart: FC<{coupon: boolean, onClick: () => any}> = ({onClick, coupon}) => {
+const AddCart: FC<AddCartProps> = ({onClick, coupon, hasCart}) => {
 
-  const text = coupon ? '🎫 Add Cart' : 'Add Cart'
+  const text = hasCart ? 'Remove Cart' : 'Add Cart'
+
+  const couponText = coupon ? '🎫 ' : ''
 
   return (
     h(Box, {
       as: 'button',
+      cursor: 'pointer',
       onClick,
       position: 'relative',
     },
@@ -144,28 +136,23 @@ const AddCart: FC<{coupon: boolean, onClick: () => any}> = ({onClick, coupon}) =
       fontSize: ['15px', '20px'],
       p: 10,
       position: 'relative',
-    }, text))
+    }, couponText, text))
   )
 }
 
 export const ProductItem: FC<ProductItemProps> = (props) => {
-  const {title, availableCoupon, price, coverImage, value = false, onChange, onAddCart, id} = props
-
-  const handleClick = useCallback(() => {
-    onChange && onChange(!value)
-  }, [value, onChange])
+  const {title, availableCoupon, price, coverImage, onChangeCart, id, hasCart} = props
 
   const handleAddCart = useCallback(() => {
-    onAddCart && onAddCart(id)
-  }, [onAddCart, id])
+    onChangeCart?.(id, hasCart ? -1 : 1)
+  }, [onChangeCart, id, hasCart])
 
   return (
-    h(ProductContainer, {onClick: handleClick},
+    h(ProductContainer, {},
       h(CoverImage, {src: coverImage}),
-      h(CheckBox, {value}),
       h(InfoContainer, null,
         h(Price, null, price),
-        h(AddCart, {coupon: availableCoupon, onClick: handleAddCart}),
+        h(AddCart, {coupon: availableCoupon, hasCart, onClick: handleAddCart}),
         h(Title, null, title),
       ),
 
