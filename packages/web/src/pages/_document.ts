@@ -1,6 +1,8 @@
+import {enableMapSet} from 'immer'
 import Document, {DocumentProps, Head, Html, Main, NextScript} from 'next/document'
 import {createElement as h} from 'react'
 import {UIDocument} from 'src/ui'
+enableMapSet()
 
 const marginPageProps = (props, pageProps = (props) => (props?.pageProps ?? {})) => {
   const _pageProps = pageProps(props)
