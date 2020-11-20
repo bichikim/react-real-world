@@ -5,6 +5,7 @@ import {Box} from 'src/components/Box'
 import {useCartList} from 'src/store/cart-list'
 
 interface HeaderProps {
+  location?: string
   onGoCart?: () => any
   onGoHome?: () => any
   onGoProducts?: () => any
@@ -12,6 +13,7 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = (props) => {
+  const {location} = props
   return (
     h(Box, {
       alignItems: 'center',
@@ -25,8 +27,19 @@ const Header: FC<HeaderProps> = (props) => {
       zIndex: 10,
     },
     h(Box, {cursor: 'pointer', flexGrow: 1, fontSize: 'md', onClick: props.onGoHome}, '101'),
-    h(Box, {cursor: 'pointer', fontSize: 'md', onClick: props.onGoProducts, pr: 10}, '🎁'),
-    h(Box, {cursor: 'pointer', fontSize: 'md', onClick: props.onGoCart}, `🛒${props.totalCount}`),
+    h(Box, {
+      cursor: 'pointer',
+      fontSize: 'md',
+      onClick: props.onGoProducts,
+      pr: 10,
+      textDecoration: location === '/products' ? 'underline' : 'none',
+    }, '🎁'),
+    h(Box, {
+      cursor: 'pointer',
+      fontSize: 'md',
+      onClick: props.onGoCart,
+      textDecoration: location === '/cart-list' ? 'underline' : 'none',
+    }, `🛒${props.totalCount}`),
     )
   )
 }
@@ -38,7 +51,7 @@ const Main: FC = (props) => {
 }
 
 export const DefaultLayout: FC = observer((props) => {
-  const {push} = useRouter()
+  const {push, pathname} = useRouter()
 
   const {state: {totalCount}} = useCartList()
 
@@ -62,7 +75,13 @@ export const DefaultLayout: FC = observer((props) => {
 
   return (
     h(Box, {maxWidth: 1024, mx: 'auto'},
-      h(Header, {onGoCart: handleGoCart, onGoHome: handleGoHome, onGoProducts: handleGoProducts, totalCount}),
+      h(Header, {
+        location: pathname,
+        onGoCart: handleGoCart,
+        onGoHome: handleGoHome,
+        onGoProducts: handleGoProducts,
+        totalCount,
+      }),
       h(Main, null, props.children),
     )
   )
