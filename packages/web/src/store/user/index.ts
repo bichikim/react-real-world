@@ -1,7 +1,6 @@
-import {ApolloClient, useApolloClient} from '@apollo/client'
+import {ApolloClient} from '@apollo/client'
 import {action, observable} from 'mobx'
 import {GetCouponsDocument, GetCouponsQuery, GetCouponsQueryVariables} from 'api'
-import {useMemo} from 'react'
 import {createAddItems, createApolloQuery, createGetItem, treatRequest} from 'src/utils'
 import {LoadingState} from 'src/store/types'
 import {client} from 'src/apollo'
@@ -52,7 +51,9 @@ export const createUser = <TCacheShape>(client: ApolloClient<TCacheShape>) => {
       updateState('idle')
     },
     error: () => updateState('error'),
-    start: () => updateState('loading'),
+    start: () => {
+      updateState('loading')
+    },
   }))
 
   return {
@@ -67,7 +68,6 @@ export const createUser = <TCacheShape>(client: ApolloClient<TCacheShape>) => {
 export const user = createUser(client)
 
 export const useUser = () => {
-  const client = useApolloClient()
 
-  return useMemo(() => createUser(client), [client])
+  return user
 }
