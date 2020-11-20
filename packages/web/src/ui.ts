@@ -20,6 +20,9 @@ const system: Interpolation<any> = {
     outline: '0 !important',
     padding: 0,
   },
+  body: {
+    overflowY: 'scroll',
+  },
 }
 
 const styles = css(system)
