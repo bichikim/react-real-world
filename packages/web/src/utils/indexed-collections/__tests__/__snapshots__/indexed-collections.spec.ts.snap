@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createIndexedStructure should return a structure for indexing  1`] = `
+Map {
+  0 => Object {
+    "id": "i1",
+    "title": "bar",
+    "type": "moon",
+  },
+  1 => Object {
+    "id": "i2",
+    "title": "foo",
+    "type": "sun",
+  },
+  2 => Object {
+    "id": "i3",
+    "title": "jhon",
+    "type": "star",
+  },
+}
+`;
+
+exports[`createIndexedStructure should return a structure for indexing  2`] = `
+Map {
+  "i1" => Object {
+    "id": "i1",
+    "title": "bar",
+    "type": "moon",
+  },
+  "i2" => Object {
+    "id": "i2",
+    "title": "foo",
+    "type": "sun",
+  },
+  "i3" => Object {
+    "id": "i3",
+    "title": "jhon",
+    "type": "star",
+  },
+}
+`;
+
+exports[`createIndexedStructure should return a structure for indexing  3`] = `
+Map {
+  "moon" => Object {
+    "id": "i1",
+    "title": "bar",
+    "type": "moon",
+  },
+  "sun" => Object {
+    "id": "i2",
+    "title": "foo",
+    "type": "sun",
+  },
+  "star" => Object {
+    "id": "i3",
+    "title": "jhon",
+    "type": "star",
+  },
+}
+`;
+
+exports[`createIndexedStructure should return a structure for indexing  4`] = `undefined`;
+
+exports[`indexed-collections createIndexedStructure should return a structure for indexing  1`] = `
+Map {
+  "i1" => Object {
+    "id": "i1",
+    "title": "bar",
+    "type": "moon",
+  },
+  "i2" => Object {
+    "id": "i2",
+    "title": "foo",
+    "type": "sun",
+  },
+  "i3" => Object {
+    "id": "i3",
+    "title": "jhon",
+    "type": "star",
+  },
+}
+`;
+
+exports[`indexed-collections createIndexedStructure should return a structure for indexing  2`] = `
+Map {
+  "moon" => Object {
+    "id": "i1",
+    "title": "bar",
+    "type": "moon",
+  },
+  "sun" => Object {
+    "id": "i2",
+    "title": "foo",
+    "type": "sun",
+  },
+  "star" => Object {
+    "id": "i3",
+    "title": "jhon",
+    "type": "star",
+  },
+}
+`;
+
+exports[`indexed-collections createIndexedStructure should return a structure for indexing  3`] = `undefined`;
