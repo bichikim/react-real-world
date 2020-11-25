@@ -83,11 +83,6 @@ const promiseRules = {
   'promise/always-return': 'off',
 }
 
-const sonarjsRules = {
-  'sonarjs/cognitive-complexity': ['error', 20],
-  'sonarjs/no-duplicate-string': 'off',
-}
-
 const uinconRules = {
   'unicorn/consistent-function-scoping': 'off',
   'unicorn/filename-case': [
@@ -144,7 +139,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/warnings',
     'plugin:unicorn/recommended',
-    'plugin:sonarjs/recommended',
   ],
   overrides: [
     {
@@ -177,7 +171,6 @@ module.exports = {
       rules: {
         'max-nested-callbacks': 'off',
         'no-magic-numbers': 'off',
-        'sonarjs/no-identical-functions': 'off',
       },
     },
   ],
@@ -191,7 +184,6 @@ module.exports = {
   },
   plugins: [
     'promise',
-    'sonarjs',
     'react',
     '@typescript-eslint',
     'import',
@@ -341,7 +333,6 @@ module.exports = {
     ],
     'space-in-parens': ['error', 'never'],
     'space-infix-ops': 'error',
-    ...sonarjsRules,
     ...promiseRules,
     ...unusedImportsRules,
     ...typescriptRules,
