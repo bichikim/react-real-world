@@ -1,6 +1,5 @@
 import {Interpolation} from '@emotion/serialize'
 import {CacheProvider, css, EmotionCache, Global, ThemeProvider} from '@emotion/react'
-import {UIDReset} from 'react-uid'
 import createCache from '@emotion/cache'
 import {FC, createElement as h, useMemo} from 'react'
 import {usePageProps} from 'src/hooks'
@@ -63,9 +62,7 @@ export const UI: FC<UIProps> = (props) => {
     h(CacheProvider, {value: cache},
       h(GlobalStyle),
       h(ThemeProvider, {theme},
-        h(UIDReset, null,
-          children,
-        ),
+        children,
       ),
     )
   )

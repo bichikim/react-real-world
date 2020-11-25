@@ -1,4 +1,7 @@
-const setItemToStructure = <T extends Record<string, any>>(
+
+export type IndexRecord<T extends Record<string, any>> = Record<keyof T, Map<any, T>>
+
+export const setItemToStructure = <T extends Record<string, any>>(
   indexRecord: Record<keyof T, Map<any, T>>,
   item: T,
 ) => {
@@ -19,7 +22,7 @@ const hadItemInStructure = <T extends Record<string, any>, A extends (keyof T)[]
   return indexRecord[key].has(item[key])
 }
 
-const getItemInStructure = <T extends Record<string, any>, K extends keyof T>(
+export const getItemInStructure = <T extends Record<string, any>, K extends keyof T>(
   indexRecord: Record<keyof T, Map<any, T>>,
   key: K,
   value: T[K],
@@ -27,7 +30,7 @@ const getItemInStructure = <T extends Record<string, any>, K extends keyof T>(
   return indexRecord[key].get(value)
 }
 
-const deleteItemInStructure = <T extends Record<string, any>, A extends (keyof T)[]>(
+export const deleteItemInStructure = <T extends Record<string, any>, A extends (keyof T)[]>(
   indexRecord: Record<keyof T, Map<any, T>>,
   indexes: A,
   item: T,
@@ -38,7 +41,7 @@ const deleteItemInStructure = <T extends Record<string, any>, A extends (keyof T
   }
 }
 
-export const createIndexedStructure = <T extends Record<string, any>, A extends (keyof T)[]>(
+export const createIndexedStructure = <T extends Record<string, any>, A extends (keyof T)[] = (keyof T)[]>(
   list: T[], indexes: A) => {
   const indexRecord: Record<keyof T, Map<any, T>> = {} as any
 
@@ -53,28 +56,39 @@ export const createIndexedStructure = <T extends Record<string, any>, A extends 
 
   }
 
-  return {
-    indexRecord,
-  }
+  return indexRecord
 }
 
-export const createIndexedCollections = <T extends Record<string, any>, A extends (keyof T)[]>(
-  list: T[], indexes: A) => {
+interface MapIterableIterator<T> {
+  [Symbol.iterator](): IterableIterator<T>
+}
+
+export interface IndexedCollections<T extends Record<string, any>> {
+  delete: (item: T) => void
+  deleteByKeyValue: <K extends keyof T>(key: K, value: T[K]) => void
+  entries: <K extends keyof T>(key: K) => IterableIterator<[K, T]>
+  forEach: <K extends keyof T>(key: K, callback: (value: T, key: K, map: Map<K, T[K]>) => void) => void
+  get: <K extends keyof T>(key: K, value: T[K]) => T
+  has: (item: T) => boolean
+  indexRecord: IndexRecord<T>
+  keys: <K extends keyof T>(key: K) => IterableIterator<K>
+  map: <K extends keyof T, R>(key: K, callback: (value: T, key: K, map: Map<K, T>) => R) => MapIterableIterator<R>
+  set: (item: T) => void
+  readonly size: number
+  values: () => IterableIterator<T>
+}
+
+export const createIndexedCollections = <T extends Record<string, any>, A extends (keyof T)[] = (keyof T)[]>(
+  list: T[], indexes: A): IndexedCollections<T> => {
 
   const _indexes = [...indexes]
-  const {indexRecord} = createIndexedStructure(list, _indexes)
+  const indexRecord = createIndexedStructure(list, _indexes)
 
   const getDefaultRecord = () => {
     return indexRecord[getDefaultIndex(_indexes)]
   }
 
   return {
-    *[Symbol.iterator]() {
-      const values = getDefaultRecord().values()
-      for (const item of values) {
-        yield item
-      }
-    },
     delete(item: T) {
       return deleteItemInStructure(indexRecord, indexes, item)
     },
@@ -99,10 +113,11 @@ export const createIndexedCollections = <T extends Record<string, any>, A extend
     has(item: T) {
       return hadItemInStructure(indexRecord, _indexes, item)
     },
+    indexRecord,
     keys<K extends keyof T>(key: K) {
       return indexRecord[key].keys()
     },
-    map<K extends keyof T>(key: K, callback: (value: T, key: K, map: Map<K, T>) => void) {
+    map<K extends keyof T, R>(key: K, callback: (value: T, key: K, map: Map<K, T>) => R): MapIterableIterator<R> {
       const target = indexRecord[key]
       return {
         *[Symbol.iterator]() {
