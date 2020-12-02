@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "analyze": "cross-env ANALYZE=true next build",
-    "build": "next build",
-    "dev": "next dev",
+    "build-p": "next build",
+    "dev-p": "next dev",
     "favicongen": "cross-env TS_NODE_PROJECT=tsconfig.node.json gulp favicons",
     "format": "cross-env TS_NODE_PROJECT=tsconfig.node.json gulp format",
     "generate": "graphql-codegen",

@@ -1,4 +1,3 @@
-
 export type IndexRecord<T extends Record<string, any>> = Record<keyof T, Map<any, T>>
 
 export const setItemToStructure = <T extends Record<string, any>>(

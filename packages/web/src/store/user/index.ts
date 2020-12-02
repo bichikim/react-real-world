@@ -1,9 +1,13 @@
-import {ApolloClient} from '@apollo/client'
-import {action, observable} from 'mobx'
-import {GetCouponsDocument, GetCouponsQuery, GetCouponsQueryVariables} from 'api'
-import {createAddItems, createApolloQuery, createGetItem, treatRequest} from 'src/utils'
-import {LoadingState} from 'src/store/types'
-import {client} from 'src/apollo'
+import {
+  createIndexedStructure,
+  createStore,
+  deleteItemInStructure,
+  getItemInStructure,
+  IndexRecord,
+  setItemToStructure,
+  useReactive,
+} from 'src/utils'
+import {LoadingState} from '../types'
 
 export interface Coupon {
   /**
@@ -17,57 +21,42 @@ export interface Coupon {
 }
 
 export interface UserState {
-  coupons: Map<string, Coupon>
+  coupons: IndexRecord<Coupon>
   state: LoadingState
 }
 
-export const createUser = <TCacheShape>(client: ApolloClient<TCacheShape>) => {
-  const state = observable<UserState>({
-    coupons: new Map<string, Coupon>(),
-    state: 'idle',
-  })
+const couponIndex: (keyof Coupon)[] = ['id']
 
-  const getCoupon = action(createGetItem(state.coupons))
+const store = createStore<UserState>({
+  coupons: createIndexedStructure<Coupon>([], couponIndex),
+  state: 'idle',
+})
 
-  const addCoupons = action(createAddItems(state.coupons)())
+export const addCoupons = store.action((coupon: Coupon) => (draft: UserState) => {
+  setItemToStructure(draft.coupons, coupon)
+})
 
-  const updateState = (value: LoadingState) => (state.state = value)
-
-  const createRequestCoupons = action(
-    createApolloQuery<GetCouponsQueryVariables, GetCouponsQuery>(GetCouponsDocument),
-  )
-
-  const requestGetCoupons = action(treatRequest(createRequestCoupons(client), {
-    done: ({data}) => {
-      addCoupons(data?.coupons.map(({title, type, discountAmount, discountRate, id}) => {
-
-        return {
-          amount: discountAmount ?? discountRate,
-          id,
-          title,
-          type,
-        }
-      }))
-      updateState('idle')
-    },
-    error: () => updateState('error'),
-    start: () => {
-      updateState('loading')
-    },
-  }))
-
-  return {
-    addCoupons,
-    getCoupon,
-    requestGetCoupons,
-    state,
-    updateState,
+export const getCoupons = store.getter((draft) => {
+  return (id: Coupon['id']) => {
+    return getItemInStructure(draft.coupons, 'id', id)
   }
-}
+})
 
-export const user = createUser(client)
+export const removeCoupons = store.action((id) => (draft) => {
+  const item = getItemInStructure(draft.coupons, 'id', id)
 
-export const useUser = () => {
+  if (!item) {
+    return
+  }
 
-  return user
-}
+  return deleteItemInStructure(draft.coupons, couponIndex, item)
+})
+
+export const updateState = store.action((value) => (draft) => {
+  draft.state = value
+})
+
+export const useUser = (initState?: Partial<UserState>) => useReactive(
+  store,
+  initState,
+)

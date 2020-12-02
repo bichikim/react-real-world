@@ -12,8 +12,8 @@
     "nohoist": []
   },
   "scripts": {
-    "build": "pnpm run generate && pnpm recursive run build",
-    "dev": "pnpm generate && pnpm recursive run dev --no-sort",
+    "build": "pnpm run generate && pnpm recursive run build-p",
+    "dev": "pnpm generate && pnpm recursive run dev-p --no-sort",
     "favicongen": "yarn workspace @bichi/web favicongen",
     "format": "lerna run format --parallel",
     "format:package.json": "sort-package-json \"package.json\" \"packages/*/package.json\" ",
