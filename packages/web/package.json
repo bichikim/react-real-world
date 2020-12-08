@@ -4,14 +4,16 @@
   "license": "MIT",
   "scripts": {
     "analyze": "cross-env ANALYZE=true next build",
-    "build-p": "next build",
-    "dev-p": "next dev",
+    "build": "next build",
+    "dev": "next dev",
     "favicongen": "cross-env TS_NODE_PROJECT=tsconfig.node.json gulp favicons",
     "format": "cross-env TS_NODE_PROJECT=tsconfig.node.json gulp format",
     "generate": "graphql-codegen",
     "start": "next start"
   },
   "dependencies": {
+    "@bichi/rare": "1.0.0",
+    "@bichi/utils": "1.0.0",
     "@apollo/client": "^3.2.5",
     "@emotion/css": "^11.0.0",
     "@emotion/react": "^11.0.0",

@@ -1,8 +1,6 @@
-import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {FC, createElement as h, useCallback} from 'react'
 import {Box} from 'src/components/Box'
-import {useCartList} from 'src/store/cart-list'
 
 interface HeaderProps {
   location?: string
@@ -26,7 +24,7 @@ const Header: FC<HeaderProps> = (props) => {
       width: '100%',
       zIndex: 10,
     },
-    h(Box, {cursor: 'pointer', flexGrow: 1, fontSize: 'md', onClick: props.onGoHome}, '101'),
+    h(Box, {cursor: 'pointer', flexGrow: 1, fontSize: 'md', onClick: props.onGoHome}, 'Shop'),
     h(Box, {
       cursor: 'pointer',
       fontSize: 'md',
@@ -50,10 +48,8 @@ const Main: FC = (props) => {
   )
 }
 
-export const DefaultLayout: FC = observer((props) => {
+export const DefaultLayout: FC = (props) => {
   const {push, pathname} = useRouter()
-
-  const {state: {totalCount}} = useCartList()
 
   const handleGoHome = useCallback(() => {
     return push('/').then(() => {
@@ -80,9 +76,9 @@ export const DefaultLayout: FC = observer((props) => {
         onGoCart: handleGoCart,
         onGoHome: handleGoHome,
         onGoProducts: handleGoProducts,
-        totalCount,
+        totalCount: 0,
       }),
       h(Main, null, props.children),
     )
   )
-})
+}

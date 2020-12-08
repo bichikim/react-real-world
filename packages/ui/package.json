@@ -1,0 +1,10 @@
+{
+  "name": "@bichi/ui",
+  "version": "1.0.0",
+  "dependencies": {
+    "@emotion/css": "^11.0.0",
+    "@emotion/react": "^11.0.0",
+    "@emotion/server": "^11.0.0",
+    "@emotion/styled": "^11.0.0"
+  }
+}

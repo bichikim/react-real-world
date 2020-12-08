@@ -1,19 +1,12 @@
                {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": false,
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "ES2015",
+    "module": "CommonJS",
     "baseUrl": ".",
     "paths": {
       "src/*": [
         "src/*"
-      ],
-      "api/*": [
-        "api/*"
-      ],
-      "assets/*": [
-        "src/assets/*"
       ]
     }
   },
@@ -21,7 +14,6 @@
     "gulpfile.ts",
     "__tests__/**/*",
     "types/**/*.d.ts",
-    "next-env.d.ts",
     "api/**/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx"

@@ -1,12 +1,11 @@
 import {
   createIndexedStructure,
-  createStore,
   deleteItemInStructure,
   getItemInStructure,
   IndexRecord,
   setItemToStructure,
-  useReactive,
 } from 'src/utils'
+import {createStore, useReactive} from '@bichi/rare'
 import {LoadingState} from '../types'
 
 export interface Coupon {

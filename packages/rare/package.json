@@ -1,5 +1,5 @@
 {
-  "name": "@bichi/utils",
+  "name": "@bichi/rare",
   "version": "1.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,9 +9,12 @@
     "dev": "gulp dev"
   },
   "dependencies": {
+    "react": "^17.0.1",
+    "immer": "^8.0.0",
+    "@bichi/utils": "^1.0.0",
     "lodash-es": "^4.17.15"
   },
   "devDependencies": {
-    "typescript": "^4.1.2"
+
   }
 }

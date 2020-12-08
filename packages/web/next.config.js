@@ -25,6 +25,8 @@ const config = withPlugins([images, transpileModules, bundleAnalyzer], {
     config.resolve.alias['src'] = path.resolve(__dirname, 'src')
     config.resolve.alias['api'] = path.resolve(__dirname, 'api')
     config.resolve.alias['assets'] = path.resolve(__dirname, 'src/assets')
+    config.resolve.alias['react'] = path.resolve('node_modules/react')
+    config.resolve.alias['react-dom'] = path.resolve('node_modules/react-dom')
 
     return config
   },
