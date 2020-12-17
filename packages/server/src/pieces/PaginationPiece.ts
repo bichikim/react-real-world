@@ -11,7 +11,7 @@ export function PaginationPiece<T>(
   const originName = Object.name.toLocaleLowerCase()
 
   @Resolver(() => Object, {isAbstract: true})
-  abstract class PaginationClass {
+  abstract class PaginationResolver {
 
     @Query(() => [Object], {name: plualize.plural(originName)})
     getSome(@Args() args: PaginationArgs): T[] {
@@ -24,5 +24,5 @@ export function PaginationPiece<T>(
     }
   }
 
-  return PaginationClass
+  return PaginationResolver
 }
