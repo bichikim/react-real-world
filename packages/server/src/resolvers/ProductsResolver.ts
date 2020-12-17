@@ -1,46 +1,30 @@
 import {Product} from 'src/objects/Product'
-import {Arg, Query, Resolver} from 'type-graphql'
-import {products} from 'src/data/products'
-import {ProductPagination} from 'src/objects/ProductPagination'
-import {take as _take, drop, sortBy} from 'lodash'
+import {Resolver} from 'type-graphql'
+import {PaginationPiece} from 'src/pieces/PaginationPiece'
+import {Resource} from 'src/resource'
 
-const DEFAULT_TAKE = 5
+const record: Record<string, Omit<Product, 'id'>> = {
+  1: {
+    description: 'foo',
+    thumbnail: 'somewhere',
+    title: 'foo',
+  },
+}
 
-@Resolver(Product)
-export class ProductResolver {
-  private readonly _products: Product[]
-
-  constructor() {
-    this._products = [...products]
-  }
-
-  @Query(() => Product)
-  async product(@Arg('id') id: string) {
-    const recipe = this._products.find(({id: _id}) => id === _id)
-    if (typeof recipe === 'undefined') {
-      throw new TypeError(id)
-    }
-    return recipe
-  }
-
-  @Query(() => ProductPagination)
-  async products(
-    @Arg('offset', {nullable: true}) offset: number = 0,
-    @Arg('take', {nullable: true}) take: number = DEFAULT_TAKE,
-    @Arg('timestamp', {nullable: true}) timestamp: number,
-    @Arg('sort', {nullable: true}) sort: boolean = false,
-  ) {
-    const products = sort ? sortBy(this._products, ['score']) : [...this._products]
-
-    const list = _take(drop(products, offset), take)
-
+class ProductResource implements Resource<Product> {
+  get(id: string): Product | undefined {
     return {
-      list,
-      offset,
-      take: list.length,
-      timestamp,
+      ...record[id],
+      id,
     }
+  }
+  some(args) {
+    return []
   }
 }
 
-export default ProductResolver
+const productResource = new ProductResource()
+
+@Resolver()
+export class ProductsResolver extends PaginationPiece<Product>(Product, productResource) {
+}

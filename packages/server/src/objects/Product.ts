@@ -8,15 +8,9 @@ export class Product {
   @Field()
   title: string
 
-  @Field({nullable: true})
-  coverImage?: string
-
   @Field()
-  price: number
-
-  @Field()
-  score: number
+  description: string
 
   @Field({nullable: true})
-  availableCoupon?: boolean
+  thumbnail?: string
 }

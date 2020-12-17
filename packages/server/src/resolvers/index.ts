@@ -1,13 +1,9 @@
 import {NonEmptyArray} from 'type-graphql/dist/interfaces/NonEmptyArray'
-import FooResolver from './FooResolver'
-import RecipeResolver from './RecipeResolver'
-import ProductsResolver from './ProductsResolver'
-import CouponResolver from './CouponResolver'
+
+import {ProductsResolver} from './ProductsResolver'
+import {ServerStateResolver} from './ServerStateResolver'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const resolvers: NonEmptyArray<Function> = [
-  FooResolver,
-  RecipeResolver,
-  ProductsResolver,
-  CouponResolver,
+  ProductsResolver, ServerStateResolver,
 ]

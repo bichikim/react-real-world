@@ -3,6 +3,8 @@
   "compilerOptions": {
     "plugins": [{"transform": "@zerollup/ts-transform-paths"}],
     "baseUrl": ".",
+    "importHelpers": true,
+    "declaration": false,
     "paths": {
       "src/*": [
         "src/*"
