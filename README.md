@@ -2,37 +2,35 @@
 
 ## Project setup
 ```
-yarn install
-# or
-lerna bootstrap
+pnpm install
 
 ```
 
 ### Generate favicons
 ```
-yarn favicongen
+pnpm favicongen
 ```
 
 ### Compiles and hot-reloads for development
 
 
 ```
-yarn dev
+pnpm dev
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+pnpm build
 ```
 
 ### Run unit tests
 ```
-yarn test
+pnpm test
 ```
 
 ### Lints and fixes files
 ```
-yarn format
+pnpm format
 ```
 
 ## [Web](./packages/web/README.md)
