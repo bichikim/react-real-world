@@ -16,11 +16,17 @@
     "graphql": "^15.4.0",
     "tslib": "^2.0.3",
     "reflect-metadata": "^0.1.13",
+    "graphql-subscriptions": "^1.1.0",
+    "graphql-redis-subscriptions": "^2.3.1",
+    "ioredis": "^4.19.4",
     "pluralize": "^8.0.0",
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
-    "@types/pluralize": "^0.0.29"
+    "@types/node": "^14.14.14",
+    "@types/ioredis": "^4.17.9",
+    "@types/pluralize": "^0.0.29",
+    "@prisma/cli": "^2.13.0"
   },
   "engines": {
     "node": ">= 10",

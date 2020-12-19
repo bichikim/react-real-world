@@ -1,7 +1,9 @@
 import {PaginationArgs} from 'src/args/PaginationArgs'
 
-export interface Resource<T> {
-  get(id: string): T | undefined
+export interface Resource<T, AA> {
+  add(args: AA): Promise<T>
 
-  some(args: PaginationArgs): T[]
+  get(id: string): Promise<T | undefined>
+
+  some(args: PaginationArgs): Promise<T[]>
 }

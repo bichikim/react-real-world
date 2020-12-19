@@ -133,19 +133,31 @@ importers:
       dotenv: 8.2.0
       express: 4.17.1
       graphql: 15.4.0
+      graphql-redis-subscriptions: 2.3.1_graphql-subscriptions@1.1.0
+      graphql-subscriptions: 1.1.0_graphql@15.4.0
+      ioredis: 4.19.4
       pluralize: 8.0.0
       reflect-metadata: 0.1.13
       tslib: 2.0.3
       type-graphql: 1.1.1_60d81cec7d8a2846c54f568d8b757f67
     devDependencies:
+      '@prisma/cli': 2.13.0
+      '@types/ioredis': 4.17.9
+      '@types/node': 14.14.14
       '@types/pluralize': 0.0.29
     specifiers:
+      '@prisma/cli': ^2.13.0
+      '@types/ioredis': ^4.17.9
+      '@types/node': ^14.14.14
       '@types/pluralize': ^0.0.29
       apollo-server: ^2.19.0
       class-validator: ^0.12.2
       dotenv: ^8.2.0
       express: ^4.17.1
       graphql: ^15.4.0
+      graphql-redis-subscriptions: ^2.3.1
+      graphql-subscriptions: ^1.1.0
+      ioredis: ^4.19.4
       pluralize: ^8.0.0
       reflect-metadata: ^0.1.13
       tslib: ^2.0.3
@@ -4013,6 +4025,26 @@ packages:
         optional: true
     resolution:
       integrity: sha512-br5Qwvh8D2OQqSXpd1g/xqXKnK0r+Jz6qVKBbWmpUcrbGOxUrf39V5oZ1876084CGn18uMdR5uvPqBv9UqtBjQ==
+  /@prisma/bar/0.0.1:
+    dev: true
+    resolution:
+      integrity: sha512-FVLhwVkbfhXlBhroWfIXMLi+3Jh9IEzYp+9z+MUUiw3ZsbcoAil7CN9/QIjHc4/TcCRyRfuSmT7qCnn4O+TjJw==
+  /@prisma/cli/2.13.0:
+    dependencies:
+      '@prisma/bar': 0.0.1
+      '@prisma/engines': 2.13.0-32.833ab05d2a20e822f6736a39a27de4fc8f6b3e49
+    dev: true
+    engines:
+      node: '>=10.4'
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-1hTj9H6gVIH5J5GPQVfeHiYFxUv09HVoThGr0Z2ds4JkVMRw///ZXll7pQJvaF7DUheg7dCNf+AXvwmpfm75tg==
+  /@prisma/engines/2.13.0-32.833ab05d2a20e822f6736a39a27de4fc8f6b3e49:
+    dev: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-BntRdj/uJQMPRXzcYJv80+NtMq+m6f+PIcCTzOUqKerEo53+ynm4bHo2ocLRLS4XtWovGummDlVgZxgWTRhkAw==
   /@protobufjs/aspromise/1.1.2:
     dev: false
     resolution:
@@ -4670,6 +4702,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IrSHl2u6AWXduUaDLqYpt45tLVCtYv7o4Z0s1KghBCDgIIS9oW5K1H8mZG/A2CfeLdEa7rTd1ACOiHBc1EMT2Q==
+  /@types/ioredis/4.17.9:
+    dependencies:
+      '@types/node': 14.14.14
+    dev: true
+    resolution:
+      integrity: sha512-YVLcCDQXaQRMK6Lut2f7KaiU2sV2dEN57AmZTtcZW/TXYv3wKwZTV87oUaA/IAI1Xk4s+d+kXLlCJkGAycfpHw==
   /@types/istanbul-lib-coverage/2.0.3:
     resolution:
       integrity: sha512-sz7iLqvVUg1gIedBOvlkxPlc8/uVzyS5OwGz1cKjXzkl3FpL3al0crU8YGU1WoHkxn0Wxbw5tyi6hvzJKNzFsw==
@@ -4787,6 +4825,10 @@ packages:
   /@types/node/14.14.10:
     resolution:
       integrity: sha512-J32dgx2hw8vXrSbu4ZlVhn1Nm3GbeCFNw2FWL8S5QKucHGY0cyNwjdQdO+KMBZ4wpmC7KhLCiNsdk1RFRIYUQQ==
+  /@types/node/14.14.14:
+    dev: true
+    resolution:
+      integrity: sha512-UHnOPWVWV1z+VV8k6L1HhG7UbGBgIdghqF3l9Ny9ApPghbjICXkUJSd/b9gOgQfjM1r+37cipdw/HJ3F6ICEnQ==
   /@types/node/8.10.66:
     dev: false
     resolution:
@@ -7699,6 +7741,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-2EF8zTQOxYq70Y4XKtorQupqF0m49MBz2/yf5Bj+MHjvpG3Hy7sImifnqD6UA+TKYxeSV+u6qqQPawN5UvnpKQ==
+  /cluster-key-slot/1.1.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-2Nii8p3RwAPiFwsnZvukotvow2rIHM+yQ6ZcBXGHdniadkYGZYiGmkHJIbZPIV9nfv7m/U1IPMVVcAhoWFeklw==
   /co/4.6.0:
     dev: true
     engines:
@@ -9083,6 +9131,12 @@ packages:
   /delegates/1.0.0:
     resolution:
       integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
+  /denque/1.4.1:
+    dev: false
+    engines:
+      node: '>=0.10'
+    resolution:
+      integrity: sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
   /depd/1.1.2:
     engines:
       node: '>= 0.6'
@@ -12258,6 +12312,17 @@ packages:
       graphql: ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-+VgmrfxGEjHI3zuojWOR8bsz7Ycz/BZjNjxnlUieTz5DsB92WoIrYCSZdWG7UWZ3rfcA1Gb2Nf+wB80GsaZWuQ==
+  /graphql-redis-subscriptions/2.3.1_graphql-subscriptions@1.1.0:
+    dependencies:
+      graphql-subscriptions: 1.1.0_graphql@15.4.0
+      iterall: 1.3.0
+    dev: false
+    optionalDependencies:
+      ioredis: 4.19.4
+    peerDependencies:
+      graphql-subscriptions: ^1.0.0
+    resolution:
+      integrity: sha512-ztS3ZXBSoPJ8Q0/o7PG2iLO6QWq2tlJrukiBJCjgMccRv1I3lt3HmLjiH2CbDjPhpoINttZNoytQbxE0OE/UpA==
   /graphql-request/3.3.0_graphql@15.4.0:
     dependencies:
       cross-fetch: 3.0.6
@@ -13209,6 +13274,23 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
+  /ioredis/4.19.4:
+    dependencies:
+      cluster-key-slot: 1.1.0
+      debug: 4.3.1
+      denque: 1.4.1
+      lodash.defaults: 4.2.0
+      lodash.flatten: 4.4.0
+      p-map: 2.1.0
+      redis-commands: 1.6.0
+      redis-errors: 1.2.0
+      redis-parser: 3.0.0
+      standard-as-callback: 2.0.1
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-3haQWw9dpEjcfVcRktXlayVNrrqvvc2io7Q/uiV2UsYw8/HC2YwwJr78Wql7zu5bzwci0x9bZYA69U7KkevAvw==
   /ip-regex/2.1.0:
     engines:
       node: '>=4'
@@ -15055,6 +15137,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
+  /lodash.defaults/4.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
   /lodash.every/4.6.0:
     dev: false
     resolution:
@@ -18649,6 +18735,24 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
+  /redis-commands/1.6.0:
+    dev: false
+    resolution:
+      integrity: sha512-2jnZ0IkjZxvguITjFTrGiLyzQZcTvaw8DAaCXxZq/dsHXz7KfMQ3OUJy7Tz9vnRtZRVz6VRCPDvruvU8Ts44wQ==
+  /redis-errors/1.2.0:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-62LSrbFeTq9GEMBK/hUpOEJQq60=
+  /redis-parser/3.0.0:
+    dependencies:
+      redis-errors: 1.2.0
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   /reduce-flatten/2.0.0:
     dev: true
     engines:
@@ -20159,6 +20263,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-KJP1OCML99+8fhOHxwwzyWrlUuVX5GQ0ZpJTd1DFXhdkrvg1szxfHhawXUZ3g9TkXORQd4/WG68jMlQZ2p8wlg==
+  /standard-as-callback/2.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-NQOxSeB8gOI5WjSaxjBgog2QFw55FV8TkS6Y07BiB3VJ8xNTvUYm0wl0s8ObgQ5NhdpnNfigMIKjgPESzgr4tg==
   /state-toggle/1.0.3:
     resolution:
       integrity: sha512-d/5Z4/2iiCnHw6Xzghyhb+GcmF89bxwgXG60wjIiZaxnymbyOmI8Hk4VqHXiVVp6u2ysaskFfXg3ekCj4WNftQ==

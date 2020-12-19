@@ -1,39 +1,19 @@
-import 'reflect-metadata' // muse import first
-import {ApolloServer}  from 'apollo-server'
-import {buildSchema} from 'type-graphql'
+import 'reflect-metadata' // must import first
 import {config} from 'dotenv'
-import {resolvers} from './resolvers'
+import {createRedisPubSub} from 'src/pubsub/create-redis-pub-sub'
+import {start} from './server'
 config()
 
-interface StartOptions {
-  emitSchemaFile?: boolean
-  port?: number
-}
-
-const DEFAULT_PORT = 9090
-
-async function start({emitSchemaFile = true, port = DEFAULT_PORT}: StartOptions = {}) {
-
-  const schema = await buildSchema({
-    emitSchemaFile,
-    resolvers,
-  })
-
-  const server = new ApolloServer({cors: {
-    credentials: true,
-    origin: process.env.NODE_ENV === 'production' ? '' : '*',
-  }, schema})
-
-  if (emitSchemaFile) {
-    return
-  }
-
-  return server.listen({port})
-}
-
 start({
+  dev: process.env.NODE_ENV === 'development',
   emitSchemaFile: process.env.NODE_ENV === 'generate',
   port: Number(process.env.PORT),
+  pubSub: createRedisPubSub({
+    // host: '192.168.100,100', // replace with own IP
+    port: 6379,
+    // eslint-disable-next-line no-magic-numbers
+    retryStrategy: (times) => Math.max(times * 100, 3000),
+  }),
 }).then((info) => {
   // in generate mode
   if (!info) {
