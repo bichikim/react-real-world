@@ -1,14 +1,15 @@
-import {ServerState, StateType} from 'src/objects/ServerState'
+import {ServerState} from 'src/objects/ServerState'
 import {Query, Resolver} from 'type-graphql'
+import {ServerStateEnum} from 'src/enums/ServerStateEnum'
 
 @Resolver()
 export class ServerStateResolver {
 
   @Query(() => ServerState)
-  async serverState(): Promise<ServerState> {
+  async serverState() {
     return Promise.resolve({
       timestamp: new Date().valueOf(),
-      value: StateType.RUNNING,
+      value: ServerStateEnum.RUNNING,
     })
   }
 }

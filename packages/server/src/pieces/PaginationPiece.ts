@@ -2,6 +2,7 @@ import plualize from 'pluralize'
 import {PaginationArgs} from 'src/args/PaginationArgs'
 import {Arg, Args, ClassType, Mutation, Publisher, PubSub, Query, Resolver, Root, Subscription} from 'type-graphql'
 import {Resource} from 'src/resource'
+import {camelCase, clone} from 'lodash'
 
 export function PaginationPiece<T, AA>(
   Object: ClassType<T>,
@@ -34,8 +35,8 @@ export function PaginationPiece<T, AA>(
     }
 
     @Mutation(() => Object, {
-      description: `add ${singularName}`,
-      name: `add-${singularName}`,
+      description: `add ${singularName} & pub ${pluralName}`,
+      name: camelCase(`add-${singularName}`),
     })
     async addOne(
       @Args(() => AddArgs) args: AA,
@@ -43,15 +44,14 @@ export function PaginationPiece<T, AA>(
     ): Promise<T> {
       const result = await resource.add(args)
 
-      await pubOne({
-        ...result,
-      })
+      await pubOne(clone(result))
 
       return result
     }
 
     @Subscription(() => Object, {
       description: `subscribe ${pluralName}`,
+      name: camelCase(`sub-${pluralName}`),
       topics: changedTopicName,
     })
     subSome(

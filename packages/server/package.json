@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build-p": "ttsc --outDir ./dist -p tsconfig.bundle.json",
-    "dev-p": "cross-env NODE_ENV=development ts-node-dev -C ttypescript -P tsconfig.bundle.json src/index.ts --transpile-only",
+    "build": "ttsc --outDir ./dist -p tsconfig.bundle.json",
+    "dev": "cross-env NODE_ENV=development ts-node-dev -C ttypescript -P tsconfig.bundle.json src/index.ts --transpile-only",
     "format": "gulp format",
     "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts"
   },

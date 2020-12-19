@@ -1,14 +1,10 @@
 import {Field, ObjectType} from 'type-graphql'
-
-export enum StateType {
-  RUNNING = 'RUNNING',
-  STOP = 'STOP'
-}
+import {ServerStateEnum} from 'src/enums/ServerStateEnum'
 
 @ObjectType()
 export class ServerState {
-  @Field(() => StateType)
-  value: StateType
+  @Field(() => ServerStateEnum)
+  value: ServerStateEnum
 
   @Field()
   timestamp: number

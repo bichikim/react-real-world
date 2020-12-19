@@ -4,7 +4,9 @@ import {Resolver} from 'type-graphql'
 import {PaginationPiece} from 'src/pieces/PaginationPiece'
 import {Resource} from 'src/resource'
 import {AddProductArgs} from 'src/args/AddProductArgs'
+import {drop, take} from 'lodash'
 
+const DEFAULT_TAKE = 5
 const record = new Map<string, Omit<Product, 'id'>>()
 
 record.set('0', {
@@ -21,7 +23,15 @@ class ProductResource implements Resource<Product, AddProductArgs> {
     })
   }
   some(args: PaginationArgs) {
-    return Promise.resolve([])
+    const {offset = 0, take: _take = DEFAULT_TAKE} = args
+    const list = [...record.entries()].map(([id, data]) => {
+      return {
+        id,
+        ...data,
+      }
+    })
+
+    return Promise.resolve(take(drop(list, offset), _take))
   }
 
   add(args) {

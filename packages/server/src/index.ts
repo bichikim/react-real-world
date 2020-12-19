@@ -9,7 +9,7 @@ start({
   emitSchemaFile: process.env.NODE_ENV === 'generate',
   port: Number(process.env.PORT),
   pubSub: createRedisPubSub({
-    // host: '192.168.100,100', // replace with own IP
+    host: 'host.docker.internal', // replace with own IP
     port: 6379,
     // eslint-disable-next-line no-magic-numbers
     retryStrategy: (times) => Math.max(times * 100, 3000),
@@ -21,7 +21,7 @@ start({
   }
   // eslint-disable-next-line no-console
   console.log(`Server is running on http://localhost:${info.port}`)
-}).catch(() => {
+}).catch((error) => {
   // eslint-disable-next-line no-console
-  console.log('Server starting error')
+  console.log('Server starting error', error)
 })
