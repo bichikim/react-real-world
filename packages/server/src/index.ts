@@ -4,15 +4,20 @@ import {createRedisPubSub} from 'src/pubsub/create-redis-pub-sub'
 import {start} from './server'
 config()
 
+// eslint-disable-next-line no-magic-numbers
+const retryStrategy = (times) => Math.max(times * 100, 3000)
+
+const DEFAULT_REDIS_PORT = 6379
+const DEFAULT_REDIS_HOST = 'host.docker.internal'
+
 start({
   dev: process.env.NODE_ENV === 'development',
   emitSchemaFile: process.env.NODE_ENV === 'generate',
   port: Number(process.env.PORT),
   pubSub: createRedisPubSub({
-    host: 'host.docker.internal', // replace with own IP
-    port: 6379,
-    // eslint-disable-next-line no-magic-numbers
-    retryStrategy: (times) => Math.max(times * 100, 3000),
+    host: process.env.REDIS_HOST ?? DEFAULT_REDIS_HOST,
+    port: Number(process.env.REDIS_PORT) ?? DEFAULT_REDIS_PORT,
+    retryStrategy,
   }),
 }).then((info) => {
   // in generate mode
