@@ -1,6 +1,8 @@
 # react-real-world
 
-## Project setup
+## Getting Start
+
+### Project setup
 ```
 pnpm install
 
@@ -33,6 +35,8 @@ pnpm test
 pnpm format
 ```
 
-## [Web](./packages/web/README.md)
+## Projects
 
-## [Server](./packages/server/README.md)
+- [web](./packages/web/README.md)
+
+- [Server](./packages/server/README.md)

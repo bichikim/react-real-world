@@ -1,40 +1,66 @@
 import plualize from 'pluralize'
 import {PaginationArgs} from 'src/args/PaginationArgs'
 import {Arg, Args, ClassType, Mutation, Publisher, PubSub, Query, Resolver, Root, Subscription} from 'type-graphql'
-import {Resource} from 'src/resource'
+import {EntitySubscriberInterface, EventSubscriber, InsertEvent, LessThanOrEqual, Repository} from 'typeorm'
 import {camelCase, clone} from 'lodash'
+import {InjectRepository} from 'typeorm-typedi-extensions'
 
 export function PaginationPiece<T, AA>(
-  Object: ClassType<T>,
+  Entity: ClassType<T>,
   AddArgs: ClassType<AA>,
-  resource: Resource<T, AA>,
 ) {
 
-  const name = Object.name.toLocaleLowerCase()
+  const name = Entity.name.toLocaleLowerCase()
   const singularName = plualize.singular(name)
   const pluralName = plualize.plural(name)
   const changedTopicName = `${pluralName}-changed`
 
-  @Resolver(() => Object, {isAbstract: true})
-  abstract class PaginationResolver {
+  @Resolver(() => Entity, {isAbstract: true})
+  @EventSubscriber()
+  abstract class PaginationResolver implements EntitySubscriberInterface {
 
-    @Query(() => [Object], {
+    listenTo() {
+      return Entity
+    }
+
+    @InjectRepository(Entity)
+    protected readonly repository: Repository<T>
+
+    /**
+     * called after entity insertion.
+     * todo testing orm event
+     */
+    prafterInsert(event: InsertEvent<any>) {
+      console.log('AFTER ENTITY INSERTED:', event.entity)
+    }
+
+    @Query(() => [Entity], {
       description: `get ${pluralName}`,
       name: pluralName,
     })
     getSome(@Args() args: PaginationArgs): Promise<T[]> {
-      return resource.some(args)
+      const {take, skip, timestamp} = args
+
+      const where = {}
+
+      if (timestamp) {
+        Object.assign(where, {
+          createAt: LessThanOrEqual(timestamp),
+        })
+      }
+
+      return this.repository.find({skip, take, where})
     }
 
-    @Query(() => Object, {
+    @Query(() => Entity, {
       description: `get a ${singularName}`,
       name: singularName,
     })
     getOne(@Arg('id') id: string): Promise<T> {
-      return resource.get(id)
+      return this.repository.findOne(id)
     }
 
-    @Mutation(() => Object, {
+    @Mutation(() => Entity, {
       description: `add ${singularName} & pub ${pluralName}`,
       name: camelCase(`add-${singularName}`),
     })
@@ -42,14 +68,14 @@ export function PaginationPiece<T, AA>(
       @Args(() => AddArgs) args: AA,
         @PubSub(changedTopicName) pubOne: Publisher<T>,
     ): Promise<T> {
-      const result = await resource.add(args)
+      const result = await this.repository.create(args)
 
       await pubOne(clone(result))
 
       return result
     }
 
-    @Subscription(() => Object, {
+    @Subscription(() => Entity, {
       description: `subscribe ${pluralName}`,
       name: camelCase(`sub-${pluralName}`),
       topics: changedTopicName,

@@ -3,7 +3,7 @@ import {ArgsType, Field} from 'type-graphql'
 @ArgsType()
 export class PaginationArgs {
   @Field()
-  offset?: number
+  skip?: number
 
   @Field()
   take?: number

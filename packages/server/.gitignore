@@ -7,3 +7,4 @@ yarn-error.log
 firebase.config.js
 .idea
 schema.gql
+ormconfig.js

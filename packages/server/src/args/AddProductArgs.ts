@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import {ArgsType, Field} from 'type-graphql'
 import {MaxLength} from 'class-validator'
 
