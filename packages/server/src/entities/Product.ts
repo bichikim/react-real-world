@@ -2,8 +2,8 @@ import {Field, ObjectType} from 'type-graphql'
 import {Column, Entity} from 'typeorm'
 import {Common} from './Common'
 
-@ObjectType()
 @Entity()
+@ObjectType()
 export class Product extends Common {
   @Field()
   @Column()

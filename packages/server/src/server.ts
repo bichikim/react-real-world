@@ -12,6 +12,7 @@ import {authChecker} from './auth'
 useContainer(Container)
 
 export interface CreateServerOptions {
+  database?: Partial<Omit<ConnectionOptions, 'entities'>>
   /**
    * whether development environment or not
    */
@@ -23,20 +24,13 @@ export interface CreateServerOptions {
   pubSub?: PubSubEngine
 }
 
-const createSchema = (options: BuildSchemaOptions) => {
-  return buildSchema(options)
-}
-
-const createApolloServer = (options: any) => {
-  return new ApolloServer(options)
-}
-
 export function createServer(options: CreateServerOptions = {}) {
 
   const {
     emitSchemaFile = true,
     dev,
     pubSub,
+    database = {},
   } = options
 
   const buildSchemaOptions: BuildSchemaOptions = {
@@ -45,9 +39,9 @@ export function createServer(options: CreateServerOptions = {}) {
      * @see https://typegraphql.com/docs/authorization.html
      */
     authChecker,
+    container: Container,
     emitSchemaFile,
     pubSub,
-
     /**
      * type graphql resolvers
      * @see https://typegraphql.com/docs/resolvers.html
@@ -73,13 +67,16 @@ export function createServer(options: CreateServerOptions = {}) {
     cache: true,
     database: 'real_db',
     dropSchema: true,
-    entities,
     host: 'localhost',
     password: 'dev-12345',
     port: 9876,
-    type: 'mysql',
+    synchronize: false,
+    type: 'mariadb',
     username: 'dev',
-  }
+    ...database,
+    entities,
+    migrations: ['migrations/*.ts'],
+  } as any
 
   // save connection instance
   let connection
@@ -88,19 +85,27 @@ export function createServer(options: CreateServerOptions = {}) {
   // prohibit modify a returned object
   return Object.freeze({
     generateSchema() {
-      return createSchema(buildSchemaOptions)
+      return buildSchema(buildSchemaOptions)
     },
     async start(port: number) {
-      // connect db
+      // start connect db
       const connectionPromise = createConnection(ormOptions)
 
-      const schema = await createSchema(buildSchemaOptions)
-      server = createApolloServer({
+      const schemaPromise = buildSchema(buildSchemaOptions)
+
+      const [_connection, schema] = await Promise.all([
+        connectionPromise,
+        schemaPromise,
+      ])
+
+      // save connection
+      connection = _connection
+
+      // create apollo server & save it
+      server = new ApolloServer({
         ...serverOptions,
         schema,
       })
-
-      connection = await connectionPromise
 
       // start listen requests
       return server.listen(port)

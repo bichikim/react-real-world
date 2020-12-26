@@ -1,2 +1,3 @@
 import {User} from './User'
-export const entities = [User]
+import {Product} from './Product'
+export const entities = [User, Product]

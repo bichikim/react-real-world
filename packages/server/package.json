@@ -6,11 +6,15 @@
     "build": "ttsc --outDir ./dist -p tsconfig.bundle.json",
     "dev": "cross-env NODE_ENV=development ts-node-dev -C ttypescript -P tsconfig.bundle.json src/index.ts --transpile-only",
     "format": "gulp format",
-    "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts"
+    "generate": "cross-env NODE_ENV=generate ts-node -C ttypescript -P tsconfig.bundle.json src/index.ts",
+    "docker-compose": "docker-compose up -d",
+    "docker-compose-stop": "docker-compose stop",
+    "docker-compose-start": "docker-compose start"
   },
   "dependencies": {
     "apollo-server": "^2.19.0",
     "class-validator": "^0.12.2",
+    "mysql": "^2.18.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.4.0",

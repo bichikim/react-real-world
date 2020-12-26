@@ -4,8 +4,8 @@ import {Field, ID, ObjectType} from 'type-graphql'
 @ObjectType()
 export abstract class Common {
   @Field(() => ID)
-  @PrimaryGeneratedColumn({type: 'uuid'})
-  id: string
+  @PrimaryGeneratedColumn({})
+  id: number
 
   @Field()
   @CreateDateColumn({type: 'timestamp'})

@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  my-db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=dev-12345
+      - MYSQL_DATABASE=real_db
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=dev-12345
+    ports:
+      - 9876:3306
+  my-redis:
+    image: redis
+    ports:
+      - 6379:6379

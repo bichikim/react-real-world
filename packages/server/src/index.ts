@@ -3,6 +3,8 @@ import 'reflect-metadata' // must import first
 import {config} from 'dotenv'
 import {createRedisPubSub} from 'src/pubsub/create-redis-pub-sub'
 import {createServer} from './server'
+
+// load env
 config()
 
 // eslint-disable-next-line no-magic-numbers
@@ -12,11 +14,18 @@ const DEFAULT_REDIS_PORT = 6379
 const DEFAULT_REDIS_HOST = 'host.docker.internal'
 
 const server = createServer({
+  database: {
+    /**
+     * do not use synchronize in production mode
+     * @see https://typeorm.io/#/connection-options/common-connection-options
+     */
+    synchronize: process.env.NODE_ENV === 'development',
+  },
   dev: process.env.NODE_ENV === 'development',
   emitSchemaFile: process.env.NODE_ENV === 'generate',
   pubSub: createRedisPubSub({
     host: process.env.REDIS_HOST ?? DEFAULT_REDIS_HOST,
-    port: Number(process.env.REDIS_PORT) ?? DEFAULT_REDIS_PORT,
+    port: Number(process.env.REDIS_PORT ?? DEFAULT_REDIS_PORT),
     retryStrategy,
   }),
 })
@@ -38,7 +47,7 @@ if (process.env.NODE_ENV === 'generate') {
     }
     console.log(`Server is running on http://localhost:${info.port}`)
   }).catch((error) => {
-    console.log('Server starting error', error)
+    console.log('Server starting error\n\n', error)
   })
 }
 
