@@ -22,8 +22,8 @@ importers:
       '@types/react': 17.0.0
       '@types/react-dom': 17.0.0
       '@types/testing-library__react-hooks': 3.4.1
-      '@typescript-eslint/eslint-plugin': 4.9.1_5897ef4c8a6133b7b28695ca449212ad
-      '@typescript-eslint/parser': 4.9.1_eslint@7.15.0+typescript@4.1.2
+      '@typescript-eslint/eslint-plugin': 4.11.0_f98637cbfc43ec8b0255f0dd25e6694b
+      '@typescript-eslint/parser': 4.11.0_eslint@7.15.0+typescript@4.1.2
       '@zerollup/ts-transform-paths': 1.7.18_typescript@4.1.2
       babel-plugin-module-resolver: 4.0.0
       cpy-cli: 3.1.1
@@ -35,9 +35,9 @@ importers:
       eslint-plugin-react: 7.21.5_eslint@7.15.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.15.0
       eslint-plugin-sort-keys-fix: 1.1.1
-      eslint-plugin-typescript-sort-keys: 1.5.0_5897ef4c8a6133b7b28695ca449212ad
+      eslint-plugin-typescript-sort-keys: 1.5.0_f98637cbfc43ec8b0255f0dd25e6694b
       eslint-plugin-unicorn: 23.0.0_eslint@7.15.0
-      eslint-plugin-unused-imports: 1.0.1_@typescript-eslint+parser@4.9.1
+      eslint-plugin-unused-imports: 1.0.1_@typescript-eslint+parser@4.11.0
       flush-promises: 1.0.2
       gulp: 4.0.2
       gulp-execa: 2.0.0
@@ -76,8 +76,8 @@ importers:
       '@types/react': ^17.0.0
       '@types/react-dom': ^17.0.0
       '@types/testing-library__react-hooks': ^3.4.1
-      '@typescript-eslint/eslint-plugin': ^4.9.1
-      '@typescript-eslint/parser': ^4.9.1
+      '@typescript-eslint/eslint-plugin': ^4.11.0
+      '@typescript-eslint/parser': ^4.11.0
       '@zerollup/ts-transform-paths': ^1.7.18
       babel-plugin-module-resolver: ^4.0.0
       cpy-cli: ^3.1.1
@@ -129,6 +129,7 @@ importers:
   packages/server:
     dependencies:
       apollo-server: 2.19.0_graphql@15.4.0
+      apollo-server-core: 2.19.1_graphql@15.4.0
       apollo-server-express: 2.19.0_graphql@15.4.0
       class-validator: 0.12.2
       dotenv: 8.2.0
@@ -137,9 +138,12 @@ importers:
       graphql-redis-subscriptions: 2.3.1_graphql-subscriptions@1.1.0
       graphql-subscriptions: 1.1.0_graphql@15.4.0
       ioredis: 4.19.4
+      jsonwebtoken: 8.5.1
       mysql: 2.18.1
+      passport: 0.4.1
       pluralize: 8.0.0
       reflect-metadata: 0.1.13
+      subscriptions-transport-ws: 0.9.18_graphql@15.4.0
       tslib: 2.0.3
       type-graphql: 1.1.1_60d81cec7d8a2846c54f568d8b757f67
       typedi: 0.8.0
@@ -148,14 +152,17 @@ importers:
     devDependencies:
       '@prisma/cli': 2.13.0
       '@types/ioredis': 4.17.9
+      '@types/jsonwebtoken': 8.5.0
       '@types/node': 14.14.14
       '@types/pluralize': 0.0.29
     specifiers:
       '@prisma/cli': ^2.13.0
       '@types/ioredis': ^4.17.9
+      '@types/jsonwebtoken': ^8.5.0
       '@types/node': ^14.14.14
       '@types/pluralize': ^0.0.29
       apollo-server: ^2.19.0
+      apollo-server-core: ^2.19.1
       apollo-server-express: ^2.19.0
       class-validator: ^0.12.2
       dotenv: ^8.2.0
@@ -164,9 +171,12 @@ importers:
       graphql-redis-subscriptions: ^2.3.1
       graphql-subscriptions: ^1.1.0
       ioredis: ^4.19.4
+      jsonwebtoken: ^8.5.1
       mysql: ^2.18.1
+      passport: ^0.4.1
       pluralize: ^8.0.0
       reflect-metadata: ^0.1.13
+      subscriptions-transport-ws: ^0.9.18
       tslib: ^2.0.3
       type-graphql: ^1.1.1
       typedi: ^0.8.0
@@ -4765,7 +4775,7 @@ packages:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
   /@types/jsonwebtoken/8.5.0:
     dependencies:
-      '@types/node': 14.14.10
+      '@types/node': 14.14.14
     dev: true
     resolution:
       integrity: sha512-9bVao7LvyorRGZCw0VmH/dr7Og+NdjYSsKAxB43OQoComFbBgsEpoR9JW6+qSq/ogwVBg8GI2MfAlk4SYI4OLg==
@@ -5116,10 +5126,34 @@ packages:
         optional: true
     resolution:
       integrity: sha512-4zY3Z88rEE99+CNvTbXSyovv2z9PNOVffTWD2W8QF5s2prBQtwN2zadqERcrHpcR7O/+KMI3fcTAmUUhK/iQcQ==
-  /@typescript-eslint/eslint-plugin/4.9.1_5897ef4c8a6133b7b28695ca449212ad:
+  /@typescript-eslint/eslint-plugin/4.11.0_f98637cbfc43ec8b0255f0dd25e6694b:
+    dependencies:
+      '@typescript-eslint/experimental-utils': 4.11.0_eslint@7.15.0+typescript@4.1.2
+      '@typescript-eslint/parser': 4.11.0_eslint@7.15.0+typescript@4.1.2
+      '@typescript-eslint/scope-manager': 4.11.0
+      debug: 4.3.1
+      eslint: 7.15.0
+      functional-red-black-tree: 1.0.1
+      regexpp: 3.1.0
+      semver: 7.3.4
+      tsutils: 3.17.1_typescript@4.1.2
+      typescript: 4.1.2
+    dev: true
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      '@typescript-eslint/parser': ^4.0.0
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-x4arJMXBxyD6aBXLm3W7mSDZRiABzy+2PCLJbL7OPqlp53VXhaA1HKK7R2rTee5OlRhnUgnp8lZyVIqjnyPT6g==
+  /@typescript-eslint/eslint-plugin/4.9.1_f98637cbfc43ec8b0255f0dd25e6694b:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.9.1_eslint@7.15.0+typescript@4.1.2
-      '@typescript-eslint/parser': 4.9.1_eslint@7.15.0+typescript@4.1.2
+      '@typescript-eslint/parser': 4.11.0_eslint@7.15.0+typescript@4.1.2
       '@typescript-eslint/scope-manager': 4.9.1
       debug: 4.3.1
       eslint: 7.15.0
@@ -5170,6 +5204,23 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-eS6FTkq+wuMJ+sgtuNTtcqavWXqsflWcfBnlYhg/nS4aZ1leewkXGbvBhaapn1q6qf4M71bsR1tez5JTRMuqwA==
+  /@typescript-eslint/experimental-utils/4.11.0_eslint@7.15.0+typescript@4.1.2:
+    dependencies:
+      '@types/json-schema': 7.0.6
+      '@typescript-eslint/scope-manager': 4.11.0
+      '@typescript-eslint/types': 4.11.0
+      '@typescript-eslint/typescript-estree': 4.11.0_typescript@4.1.2
+      eslint: 7.15.0
+      eslint-scope: 5.1.1
+      eslint-utils: 2.1.0
+    dev: true
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      eslint: '*'
+      typescript: '*'
+    resolution:
+      integrity: sha512-1VC6mSbYwl1FguKt8OgPs8xxaJgtqFpjY/UzUYDBKq4pfQ5lBvN2WVeqYkzf7evW42axUHYl2jm9tNyFsb8oLg==
   /@typescript-eslint/experimental-utils/4.9.1_eslint@7.15.0+typescript@4.1.2:
     dependencies:
       '@types/json-schema': 7.0.6
@@ -5206,11 +5257,11 @@ packages:
         optional: true
     resolution:
       integrity: sha512-03ilO0ucSD0EPTw2X4PntSIRFtDPWjrVq7C3/Z3VQHRC7+13YB55rcJI3Jt+YgeHbjUdJPcPa7b23rXCBokuyA==
-  /@typescript-eslint/parser/4.9.1_eslint@7.15.0+typescript@4.1.2:
+  /@typescript-eslint/parser/4.11.0_eslint@7.15.0+typescript@4.1.2:
     dependencies:
-      '@typescript-eslint/scope-manager': 4.9.1
-      '@typescript-eslint/types': 4.9.1
-      '@typescript-eslint/typescript-estree': 4.9.1_typescript@4.1.2
+      '@typescript-eslint/scope-manager': 4.11.0
+      '@typescript-eslint/types': 4.11.0
+      '@typescript-eslint/typescript-estree': 4.11.0_typescript@4.1.2
       debug: 4.3.1
       eslint: 7.15.0
       typescript: 4.1.2
@@ -5224,7 +5275,16 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-Gv2VpqiomvQ2v4UL+dXlQcZ8zCX4eTkoIW+1aGVWT6yTO+6jbxsw7yQl2z2pPl/4B9qa5JXeIbhJpONKjXIy3g==
+      integrity: sha512-NBTtKCC7ZtuxEV5CrHUO4Pg2s784pvavc3cnz6V+oJvVbK4tH9135f/RBP6eUA2KHiFKAollSrgSctQGmHbqJQ==
+  /@typescript-eslint/scope-manager/4.11.0:
+    dependencies:
+      '@typescript-eslint/types': 4.11.0
+      '@typescript-eslint/visitor-keys': 4.11.0
+    dev: true
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-6VSTm/4vC2dHM3ySDW9Kl48en+yLNfVV6LECU8jodBHQOhO8adAVizaZ1fV0QGZnLQjQ/y0aBj5/KXPp2hBTjA==
   /@typescript-eslint/scope-manager/4.9.1:
     dependencies:
       '@typescript-eslint/types': 4.9.1
@@ -5234,6 +5294,12 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-sa4L9yUfD/1sg9Kl8OxPxvpUcqxKXRjBeZxBuZSSV1v13hjfEJkn84n0An2hN8oLQ1PmEl2uA6FkI07idXeFgQ==
+  /@typescript-eslint/types/4.11.0:
+    dev: true
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-XXOdt/NPX++txOQHM1kUMgJUS43KSlXGdR/aDyEwuAEETwuPt02Nc7v+s57PzuSqMbNLclblQdv3YcWOdXhQ7g==
   /@typescript-eslint/types/4.9.1:
     dev: true
     engines:
@@ -5259,6 +5325,27 @@ packages:
         optional: true
     resolution:
       integrity: sha512-OMAr+nJWKdlVM9LOqCqh3pQQPwxHAN7Du8DR6dmwCrAmxtiXQnhHJ6tBNtf+cggqfo51SG/FCwnKhXCIM7hnVg==
+  /@typescript-eslint/typescript-estree/4.11.0_typescript@4.1.2:
+    dependencies:
+      '@typescript-eslint/types': 4.11.0
+      '@typescript-eslint/visitor-keys': 4.11.0
+      debug: 4.3.1
+      globby: 11.0.1
+      is-glob: 4.0.1
+      lodash: 4.17.20
+      semver: 7.3.4
+      tsutils: 3.17.1_typescript@4.1.2
+      typescript: 4.1.2
+    dev: true
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-eA6sT5dE5RHAFhtcC+b5WDlUIGwnO9b0yrfGa1mIOIAjqwSQCpXbLiFmKTdRbQN/xH2EZkGqqLDrKUuYOZ0+Hg==
   /@typescript-eslint/typescript-estree/4.9.1_typescript@4.1.2:
     dependencies:
       '@typescript-eslint/types': 4.9.1
@@ -5280,6 +5367,15 @@ packages:
         optional: true
     resolution:
       integrity: sha512-bzP8vqwX6Vgmvs81bPtCkLtM/Skh36NE6unu6tsDeU/ZFoYthlTXbBmpIrvosgiDKlWTfb2ZpPELHH89aQjeQw==
+  /@typescript-eslint/visitor-keys/4.11.0:
+    dependencies:
+      '@typescript-eslint/types': 4.11.0
+      eslint-visitor-keys: 2.0.0
+    dev: true
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-tRYKyY0i7cMk6v4UIOCjl1LhuepC/pc6adQqJk4Is3YcC6k46HvsV9Wl7vQoLbm9qADgeujiT7KdLrylvFIQ+A==
   /@typescript-eslint/visitor-keys/4.9.1:
     dependencies:
       '@typescript-eslint/types': 4.9.1
@@ -5782,6 +5878,18 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-FUKE8ASr8GxVq5rmky/tY8bsf++cleGT591lfLiqnPsP1fo3kAfgRfWA2QRHTCKFNlQxzUhVOEDv+PaysqiOjw==
+  /apollo-cache-control/0.11.5_graphql@15.4.0:
+    dependencies:
+      apollo-server-env: 2.4.5
+      apollo-server-plugin-base: 0.10.3_graphql@15.4.0
+      graphql: 15.4.0
+    dev: false
+    engines:
+      node: '>=6.0'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-jvarfQhwDRazpOsmkt5Pd7qGFrtbL70zMbUZGqDhJSYpfqI672f7bXXc7O3vtpbD3qnS3XTBvK2kspX/Bdo0IA==
   /apollo-datasource/0.7.2:
     dependencies:
       apollo-server-caching: 0.5.2
@@ -5832,6 +5940,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qr4DheFP154PGZsd93SSIS9RkqHnR5b6vT+eCloWjy3UIpY+yZ3cVLlttlIjYvOG4xTJ25XEwcHiAExatQo/7g==
+  /apollo-reporting-protobuf/0.6.2:
+    dependencies:
+      '@apollo/protobufjs': 1.0.5
+    dev: false
+    resolution:
+      integrity: sha512-WJTJxLM+MRHNUxt1RTl4zD0HrLdH44F2mDzMweBj1yHL0kSt8I1WwoiF/wiGVSpnG48LZrBegCaOJeuVbJTbtw==
   /apollo-server-caching/0.5.2:
     dependencies:
       lru-cache: 5.1.1
@@ -5876,6 +5990,42 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-2aMKUVPyNbomJQaG2tkpfqvp1Tfgxgkdr7nX5zHudYNSzsPrHw+CcYlCbIVFFI/mTZsjoK9czNq1qerFRxZbJw==
+  /apollo-server-core/2.19.1_graphql@15.4.0:
+    dependencies:
+      '@apollographql/apollo-tools': 0.4.8
+      '@apollographql/graphql-playground-html': 1.6.26
+      '@types/graphql-upload': 8.0.4
+      '@types/ws': 7.4.0
+      apollo-cache-control: 0.11.5_graphql@15.4.0
+      apollo-datasource: 0.7.2
+      apollo-graphql: 0.6.0_graphql@15.4.0
+      apollo-reporting-protobuf: 0.6.2
+      apollo-server-caching: 0.5.2
+      apollo-server-env: 2.4.5
+      apollo-server-errors: 2.4.2_graphql@15.4.0
+      apollo-server-plugin-base: 0.10.3_graphql@15.4.0
+      apollo-server-types: 0.6.2_graphql@15.4.0
+      apollo-tracing: 0.12.1_graphql@15.4.0
+      async-retry: 1.3.1
+      fast-json-stable-stringify: 2.1.0
+      graphql: 15.4.0
+      graphql-extensions: 0.12.7_graphql@15.4.0
+      graphql-tag: 2.11.0_graphql@15.4.0
+      graphql-tools: 4.0.8_graphql@15.4.0
+      graphql-upload: 8.1.0_graphql@15.4.0
+      loglevel: 1.7.1
+      lru-cache: 5.1.1
+      sha.js: 2.4.11
+      subscriptions-transport-ws: 0.9.18_graphql@15.4.0
+      uuid: 8.3.1
+      ws: 6.2.1
+    dev: false
+    engines:
+      node: '>=6'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-5EVmcY8Ij7Ywwu+Ze4VaUhZBcxl8t5ztcSatJrKMd4HYlEHyaNGBV2itfpyqAthxfdMbGKqlpeCHmTGSqDcNpA==
   /apollo-server-env/2.4.5:
     dependencies:
       node-fetch: 2.6.1
@@ -5933,6 +6083,17 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-uM5uL1lOxbXdgvt/aEIbgs40fV9xA45Y3Mmh0VtQ/ddqq0MXR5aG92nnf8rM+URarBCUfxKJKaYzJJ/CXAnEdA==
+  /apollo-server-plugin-base/0.10.3_graphql@15.4.0:
+    dependencies:
+      apollo-server-types: 0.6.2_graphql@15.4.0
+      graphql: 15.4.0
+    dev: false
+    engines:
+      node: '>=6'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-NCLOsk9Jsd8oLvefkQvROdMDQvnHnzbzz3MPCqEYjCOEv0YBM8T77D0wCwbcViDS2M5p0W6un2ub9s/vU71f7Q==
   /apollo-server-types/0.6.1_graphql@15.4.0:
     dependencies:
       apollo-reporting-protobuf: 0.6.1
@@ -5946,6 +6107,19 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-IEQ37aYvMLiTUzsySVLOSuvvhxuyYdhI05f3cnH6u2aN1HgGp7vX6bg+U3Ue8wbHfdcifcGIk5UEU+Q+QO6InA==
+  /apollo-server-types/0.6.2_graphql@15.4.0:
+    dependencies:
+      apollo-reporting-protobuf: 0.6.2
+      apollo-server-caching: 0.5.2
+      apollo-server-env: 2.4.5
+      graphql: 15.4.0
+    dev: false
+    engines:
+      node: '>=6'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-LgSKgAStiDzpUSLYwJoAmy0W8nkxx/ExMmgEPgEYVi6dKPkUmtu561J970PhGdYH+D79ke3g87D+plkUkgfnlQ==
   /apollo-server/2.19.0_graphql@15.4.0:
     dependencies:
       apollo-server-core: 2.19.0_graphql@15.4.0
@@ -5971,6 +6145,18 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-cMUYGE6mOEwb9HDqhf4fiPEo2JMhjPIqEprAQEC57El76avRpRig5NM0bnqMZcYJZR5QmLlNcttNccOwf9WrNg==
+  /apollo-tracing/0.12.1_graphql@15.4.0:
+    dependencies:
+      apollo-server-env: 2.4.5
+      apollo-server-plugin-base: 0.10.3_graphql@15.4.0
+      graphql: 15.4.0
+    dev: false
+    engines:
+      node: '>=4.0'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-qdkUjW+pOaidGOSITypeYE288y28HkPmGNpUtyQSOeTxgqXHtQX3TDWiOJ2SmrLH08xdSwfvz9o5KrTq4PdISg==
   /apollo-utilities/1.3.4_graphql@15.4.0:
     dependencies:
       '@wry/equality': 0.1.11
@@ -7116,7 +7302,6 @@ packages:
     resolution:
       integrity: sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=
   /buffer-equal-constant-time/1.0.1:
-    dev: true
     resolution:
       integrity: sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=
   /buffer-equal/1.0.0:
@@ -9582,7 +9767,6 @@ packages:
   /ecdsa-sig-formatter/1.0.11:
     dependencies:
       safe-buffer: 5.2.1
-    dev: true
     resolution:
       integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==
   /ee-first/1.1.1:
@@ -10140,10 +10324,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-x02SLBg+8OEaoT9vvMbsgeInw17wjHLsa9cOieIVQY+xMNRiXBbyMWw+NiBoxYyJIR4QKDOPDofCjQdoSvltQg==
-  /eslint-plugin-typescript-sort-keys/1.5.0_5897ef4c8a6133b7b28695ca449212ad:
+  /eslint-plugin-typescript-sort-keys/1.5.0_f98637cbfc43ec8b0255f0dd25e6694b:
     dependencies:
       '@typescript-eslint/experimental-utils': 2.34.0_eslint@7.15.0+typescript@4.1.2
-      '@typescript-eslint/parser': 4.9.1_eslint@7.15.0+typescript@4.1.2
+      '@typescript-eslint/parser': 4.11.0_eslint@7.15.0+typescript@4.1.2
       eslint: 7.15.0
       json-schema: 0.2.5
       natural-compare-lite: 1.4.0
@@ -10180,9 +10364,9 @@ packages:
       eslint: '>=7.11.0'
     resolution:
       integrity: sha512-Vabo3cjl6cjyhcf+76CdQEY6suOFzK0Xh3xo0uL9VDYrDJP5+B6PjV0tHTYm82WZmFWniugFJM3ywHSNYTi/ZQ==
-  /eslint-plugin-unused-imports/1.0.1_@typescript-eslint+parser@4.9.1:
+  /eslint-plugin-unused-imports/1.0.1_@typescript-eslint+parser@4.11.0:
     dependencies:
-      '@typescript-eslint/eslint-plugin': 4.9.1_5897ef4c8a6133b7b28695ca449212ad
+      '@typescript-eslint/eslint-plugin': 4.9.1_f98637cbfc43ec8b0255f0dd25e6694b
       eslint: 7.15.0
       eslint-rule-composer: 0.3.0
       requireindex: 1.2.0
@@ -12329,6 +12513,19 @@ packages:
       graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-EUNw+OIRXYTPxToSoJjhJvS5aGa94KkdkZnL1I9DCZT64/+rzQNeLeGj+goj2RYuYvoQe1Bmcx0CNZ1GqwBhng==
+  /graphql-extensions/0.12.7_graphql@15.4.0:
+    dependencies:
+      '@apollographql/apollo-tools': 0.4.8
+      apollo-server-env: 2.4.5
+      apollo-server-types: 0.6.2_graphql@15.4.0
+      graphql: 15.4.0
+    dev: false
+    engines:
+      node: '>=6.0'
+    peerDependencies:
+      graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    resolution:
+      integrity: sha512-yc9qOmEmWVZNkux9m0eCiHdtYSwNZRHkFhgfKfDn4u/gpsJolft1iyMUADnG/eytiRW0CGZFBpZjHkJhpginuQ==
   /graphql-playground-html/1.6.29:
     dependencies:
       xss: 1.0.8
@@ -14744,7 +14941,6 @@ packages:
       lodash.once: 4.1.1
       ms: 2.1.2
       semver: 5.7.1
-    dev: true
     engines:
       node: '>=4'
       npm: '>=1.4.28'
@@ -14788,14 +14984,12 @@ packages:
       buffer-equal-constant-time: 1.0.1
       ecdsa-sig-formatter: 1.0.11
       safe-buffer: 5.2.1
-    dev: true
     resolution:
       integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==
   /jws/3.2.2:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
-    dev: true
     resolution:
       integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==
   /keyv/3.0.0:
@@ -15207,15 +15401,12 @@ packages:
     resolution:
       integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
   /lodash.includes/4.3.0:
-    dev: true
     resolution:
       integrity: sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
   /lodash.isboolean/3.0.3:
-    dev: true
     resolution:
       integrity: sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=
   /lodash.isinteger/4.0.4:
-    dev: true
     resolution:
       integrity: sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=
   /lodash.ismatch/4.4.0:
@@ -15223,15 +15414,12 @@ packages:
     resolution:
       integrity: sha1-dWy1FQyjum8RCFp4hJZF8Yj4Xzc=
   /lodash.isnumber/3.0.3:
-    dev: true
     resolution:
       integrity: sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=
   /lodash.isplainobject/4.0.6:
-    dev: true
     resolution:
       integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
   /lodash.isstring/4.0.1:
-    dev: true
     resolution:
       integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
   /lodash.map/4.6.0:
@@ -15247,7 +15435,6 @@ packages:
     resolution:
       integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
   /lodash.once/4.1.1:
-    dev: true
     resolution:
       integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
   /lodash.set/4.3.2:
@@ -17342,6 +17529,21 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
+  /passport-strategy/1.0.0:
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
+  /passport/0.4.1:
+    dependencies:
+      passport-strategy: 1.0.0
+      pause: 0.0.1
+    dev: false
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha512-IxXgZZs8d7uFSt3eqNjM9NQ3g3uQCW5avD8mRNoXV99Yig50vjuaez6dQK2qC0kVWPRTujxY0dWgGfT09adjYg==
   /password-prompt/1.1.2:
     dependencies:
       ansi-escapes: 3.2.0
@@ -17452,6 +17654,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+  /pause/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-HUCLP9t2kjuVQ9lvtMnf1TXZy10=
   /pbkdf2/3.1.1:
     dependencies:
       create-hash: 1.2.0

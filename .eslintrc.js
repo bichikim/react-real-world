@@ -15,6 +15,10 @@ const typescriptRules = {
   '@typescript-eslint/explicit-function-return-type': 'off',
   '@typescript-eslint/explicit-module-boundary-types': 'off',
   '@typescript-eslint/indent': ['error', 2],
+  /**
+   * it has an error
+   * @see https://github.com/typescript-eslint/typescript-eslint/issues/1232
+   */
   '@typescript-eslint/member-delimiter-style': [
     'error',
     {

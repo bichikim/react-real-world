@@ -1,7 +1,7 @@
 import {ArgsType, Field} from 'type-graphql'
 
 @ArgsType()
-export class PaginationArgs {
+export class CrudArgs {
   @Field()
   skip?: number
 

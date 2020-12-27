@@ -1,17 +1,26 @@
-import {ApolloServer}  from 'apollo-server'
-import {buildSchema, BuildSchemaOptions} from 'type-graphql'
+import {ApolloServer} from 'apollo-server'
+import {ApolloServerExpressConfig, CorsOptions} from 'apollo-server-express'
+import {Request} from 'express'
 import {PubSubEngine} from 'graphql-subscriptions'
-import {ConnectionOptions, createConnection, useContainer} from 'typeorm'
+import {buildSchema, BuildSchemaOptions} from 'type-graphql'
 import {Container} from 'typeDi'
-import {resolvers} from './resolvers'
+import {ConnectionOptions, createConnection, useContainer} from 'typeorm'
+import {AuthCheckerOptions, createAuthChecker} from './auth'
+import {ContextOptions, createContextFunction} from './context'
 import {entities} from './entities'
-import {context} from './context'
-import {authChecker} from './auth'
+import {resolvers} from './resolvers'
 
 // register 3rd party IOC container
 useContainer(Container)
 
+export interface ApolloConfig extends ApolloServerExpressConfig {
+  cors?: CorsOptions | boolean
+  onHealthCheck?: (request: Request) => Promise<any>
+}
+
 export interface CreateServerOptions {
+  auth?: AuthCheckerOptions
+  context?: ContextOptions
   database?: Partial<Omit<ConnectionOptions, 'entities'>>
   /**
    * whether development environment or not
@@ -31,6 +40,8 @@ export function createServer(options: CreateServerOptions = {}) {
     dev,
     pubSub,
     database = {},
+    auth,
+    context,
   } = options
 
   const buildSchemaOptions: BuildSchemaOptions = {
@@ -38,7 +49,7 @@ export function createServer(options: CreateServerOptions = {}) {
      * logic of the type graphql @Authorized
      * @see https://typegraphql.com/docs/authorization.html
      */
-    authChecker,
+    authChecker: createAuthChecker(auth),
     container: Container,
     emitSchemaFile,
     pubSub,
@@ -49,9 +60,9 @@ export function createServer(options: CreateServerOptions = {}) {
     resolvers,
   }
 
-  const serverOptions: any = {
+  const serverOptions: ApolloConfig = {
     // provide shared context
-    context,
+    context: createContextFunction(context),
 
     // cross-Origin resource sharing options
     cors: {
@@ -88,6 +99,7 @@ export function createServer(options: CreateServerOptions = {}) {
       return buildSchema(buildSchemaOptions)
     },
     async start(port: number) {
+
       // start connect db
       const connectionPromise = createConnection(ormOptions)
 

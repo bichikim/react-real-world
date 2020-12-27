@@ -1,6 +1,16 @@
 # Server
 
 
+## Start Development
+
+```bash
+# up dockers first
+docker-compose up -d
+
+# run dev
+pnpm run dev
+```
+
 ## DB
 
 you need an ormconfig.js file as below 
@@ -18,3 +28,5 @@ module.exports = {
   username: 'dev',
 }
 ```
+
+
