@@ -19,6 +19,7 @@
     "format:package.json": "sort-package-json \"package.json\" \"packages/*/package.json\" ",
     "generate": "pnpm recursive run generate --filter @bichi/server && pnpm recursive run generate --filter @bichi/web",
     "start": "lerna run start",
+    "clean": "lerna clean && rimraf node_modules",
     "test": "jest"
   },
   "engines": {
@@ -30,6 +31,7 @@
     "react-dom": "~17.0.1"
   },
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "@babel/core": "^7.12.9",
     "@babel/plugin-transform-react-jsx": "^7.12.7",
     "@babel/preset-env": "^7.12.7",
@@ -40,7 +42,8 @@
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@testing-library/react": "^11.2.2",
-    "@testing-library/react-hooks": "^3.7.0",
+    "@emotion/jest": "^11.1.0",
+    "@testing-library/react-hooks": "^4.0.0-beta.2",
     "@types/gulp": "^4.0.7",
     "@types/jest": "^26.0.17",
     "@types/lodash": "^4.14.165",

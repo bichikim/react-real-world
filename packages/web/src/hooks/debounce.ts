@@ -1,5 +1,4 @@
-import {DebounceSettings} from 'lodash'
-import {debounce} from 'lodash-es'
+import {debounce, DebounceSettings} from 'lodash'
 import {useCallback, useMemo, useRef} from 'react'
 
 const DEFAULT_DELAY = 250

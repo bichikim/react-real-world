@@ -12,9 +12,9 @@ describe('indexed-collections', function test() {
 
       const result = createIndexedStructure(dataList, ['id', 'type'])
 
-      expect(result.indexRecord.id).toMatchSnapshot()
-      expect(result.indexRecord.type).toMatchSnapshot()
-      expect(result.indexRecord.title).toMatchSnapshot()
+      expect(result.id).toMatchSnapshot()
+      expect(result.type).toMatchSnapshot()
+      expect(result.title).toMatchSnapshot()
     })
   })
 
@@ -26,7 +26,7 @@ describe('indexed-collections', function test() {
         ['id', 'type'],
       )
 
-      expect([...result]).toEqual(dataList)
+      expect([...result.values()]).toEqual(dataList)
 
       expect(result.size).toBe(3)
       expect(result.get('id', 'i1')).toEqual(dataList[0])

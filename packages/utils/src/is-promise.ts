@@ -5,3 +5,4 @@ export const isPromise = (promiseLike: any): promiseLike is Promise<any> => {
 
   return typeof promiseLike.then === 'function' && typeof promiseLike.catch === 'function'
 }
+

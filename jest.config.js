@@ -1,36 +1,27 @@
-const path = require('path')
+const baseConfig = require('./jest.base')
+
+const _config = {...baseConfig, collectCoverageFrom: undefined, testMatch: undefined}
 
 module.exports = {
-  cacheDirectory: './.jest/cache',
+  ..._config,
+
+  collectCoverage: true,
 
   collectCoverageFrom: [
-    'packages/web/src/**/*.{ts,tsx}',
+    '<rootDir>/src/**/*.{ts,tsx}',
   ],
 
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
-
   moduleNameMapper: {
+
     '\\.(css|scss)$': 'identity-obj-proxy',
+
     '\\.(jpg|jpeg|png|svg)$': '<rootDir>/__mocks__/file.mock.ts',
   },
 
-  setupFiles: [path.resolve(__dirname, 'jest.setup.js')],
+  projects: ['<rootDir>/packages/*/jest.config.js'],
 
-  setupFilesAfterEnv: ['jest-extended'],
+  setupFiles: ['./jest.setup.js'],
 
-  snapshotSerializers: ['jest-emotion'],
+  // setupFilesAfterEnv: ['jest-extended'],
 
-  testMatch: [
-    '**/__tests__/**/?(*.)(spec|test).[jt]s?(x)',
-  ],
-
-  testPathIgnorePatterns: [
-    '\\.snap$',
-    '<rootDir>/node_modules/',
-    '(/__tests__/.*|(\\.|/)(test|spec))\\.d.ts$',
-  ],
-
-  transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!lodash-es)',
-  ],
 }

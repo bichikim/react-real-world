@@ -1,2 +1,3 @@
-export * from './store'
+export * from 'src/Store'
 export * from './use-reactive'
+export * from './use-action'

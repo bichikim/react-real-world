@@ -1,2 +1,6 @@
 export * from './is-promise'
 export * from './is-ssr'
+export * from './iterator-map'
+export * from './Observer'
+export * from './types'
+export * from './callbackify'
