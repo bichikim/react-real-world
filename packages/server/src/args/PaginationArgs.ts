@@ -1,13 +1,13 @@
 import {ArgsType, Field} from 'type-graphql'
 
 @ArgsType()
-export class CrudArgs {
-  @Field()
+export class PaginationArgs {
+  @Field({nullable: true})
   skip?: number
 
-  @Field()
+  @Field({nullable: true})
   take?: number
 
-  @Field()
+  @Field({nullable: true})
   timestamp?: number
 }

@@ -1,6 +1,6 @@
 import {camelCase, clone} from 'lodash'
 import plualize from 'pluralize'
-import {CrudArgs} from 'src/args/CrudArgs'
+import {PaginationArgs} from 'src/args/PaginationArgs'
 import {CrudAction} from 'src/enums/CrudAction'
 import {
   Arg,
@@ -22,7 +22,7 @@ import {Role} from 'src/auth'
 import {LessThanOrEqual, Repository} from 'typeorm'
 import {InjectRepository} from 'typeorm-typedi-extensions'
 
-export function ToggleDecorator<Args extends any[]>(toggle: boolean, Decorator, ...args: Args) {
+export function ToggleDecorator<Args extends unknown[]>(toggle: boolean, Decorator, ...args: Args) {
   if (toggle) {
     return Decorator(...args)
   }
@@ -39,9 +39,18 @@ export interface AuthOptions {
   updateOne?: Role[]
 }
 
-export function CrudPiece<EntityType, AddArasType>(
-  Entity: ClassType<EntityType>,
-  AddArgs: ClassType<AddArasType>,
+export interface ArgOptions<ADD, UPDATE> {
+  add: ADD
+  update: UPDATE
+}
+
+export function CrudPiece<
+  EntityType extends ClassType,
+  AddArasType extends ClassType,
+  UpdateArgsType extends ClassType
+>(
+  Entity: EntityType,
+  args: ArgOptions<AddArasType, UpdateArgsType>,
   authOptions: AuthOptions = {},
 ) {
 
@@ -52,7 +61,7 @@ export function CrudPiece<EntityType, AddArasType>(
   const changedTopicName = `${pluralName}-changed`
 
   @ObjectType()
-  class PubSubSome extends (Entity as any) {
+  class PubSubSome extends Entity {
     @Field(() => CrudAction)
     _action: CrudAction
   }
@@ -61,14 +70,14 @@ export function CrudPiece<EntityType, AddArasType>(
   abstract class PaginationResolver {
 
     @InjectRepository(Entity)
-    protected readonly repository: Repository<EntityType>
+    protected readonly repository: Repository<InstanceType<EntityType>>
 
     @ToggleDecorator(Boolean(getSome), Authorized, getSome)
     @Query(() => [Entity], {
       description: `get ${pluralName}`,
       name: pluralName,
     })
-    getSome(@Args() args: CrudArgs): Promise<EntityType[]> {
+    getSome(@Args() args: PaginationArgs): Promise<EntityType[]> {
       const {take, skip, timestamp} = args
 
       const where = {}
@@ -86,8 +95,9 @@ export function CrudPiece<EntityType, AddArasType>(
     @Query(() => Entity, {
       description: `get a ${singularName}`,
       name: singularName,
+      nullable: true,
     })
-    getOne(@Arg('id') id: string): Promise<EntityType> {
+    getOne(@Arg('id') id: string): Promise<EntityType | undefined> {
       return this.repository.findOne(id)
     }
 
@@ -97,7 +107,7 @@ export function CrudPiece<EntityType, AddArasType>(
       name: camelCase(`add-${singularName}`),
     })
     async createOne(
-      @Args(() => AddArgs) args: AddArasType,
+      @Args(() => args.add) args: InstanceType<AddArasType>,
         @PubSub(changedTopicName) pubSome: Publisher<[PubSubSome]>,
     ): Promise<EntityType> {
 
@@ -110,33 +120,34 @@ export function CrudPiece<EntityType, AddArasType>(
         _action: CrudAction.CREATE,
       }])
 
-      return result
+      // type buggy
+      return result as any
     }
 
     @ToggleDecorator(Boolean(updateOne), Authorized, updateOne)
     @Mutation(() => Entity, {
       description: `update ${singularName} & pub ${pluralName}`,
       name: camelCase(`update-${singularName}`),
+      nullable: true,
     })
     async updateOne(
       @Arg('id') id: string,
-        @Args(() => AddArgs) args: AddArasType,
+        @Args(() => args.update) args: InstanceType<UpdateArgsType>,
         @PubSub(changedTopicName) pubSome: Publisher<[PubSubSome]>,
-    ): Promise<EntityType> {
+    ): Promise<EntityType | undefined> {
       const item = await this.repository.findOne(id)
 
-      if (item) {
-        await this.repository.update(item, args)
+      if (!item) {
+        return
       }
 
-      const result = await this.repository.findOne(id)
+      Object.assign(item, args)
+      const result = await this.repository.save(item)
 
-      if (item) {
-        await pubSome([{
-          ...clone(result),
-          _action: CrudAction.UPDATE,
-        }])
-      }
+      await pubSome([{
+        ...clone(result),
+        _action: CrudAction.UPDATE,
+      }])
 
       return result
     }
@@ -145,11 +156,12 @@ export function CrudPiece<EntityType, AddArasType>(
     @Mutation(() => Entity, {
       description: `remove ${singularName}`,
       name: camelCase(`remove-${singularName}`),
+      nullable: true,
     })
     async removeOne(
       @Arg('id') id: string,
         @PubSub(changedTopicName) pubSome: Publisher<[PubSubSome]>,
-    ): Promise<EntityType> {
+    ): Promise<EntityType | undefined> {
       const item = await this.repository.findOne(id)
 
       if (item) {
