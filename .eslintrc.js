@@ -14,11 +14,10 @@ const typescriptRules = {
   }],
   '@typescript-eslint/explicit-function-return-type': 'off',
   '@typescript-eslint/explicit-module-boundary-types': 'off',
-  '@typescript-eslint/indent': ['error', 2],
   /**
-   * it has an error
-   * @see https://github.com/typescript-eslint/typescript-eslint/issues/1232
+   * https://github.com/typescript-eslint/typescript-eslint/issues/1824
    */
+  '@typescript-eslint/indent': ['error', 2],
   '@typescript-eslint/member-delimiter-style': [
     'error',
     {
@@ -101,29 +100,34 @@ const uinconRules = {
       ],
     },
   ],
+  'unicorn/import-index': 'off',
+  'unicorn/no-array-reduce': 'off',
   'unicorn/no-fn-reference-in-iterator': 'off',
   'unicorn/no-null': 'off',
   'unicorn/no-reduce': 'off',
-  'unicorn/prevent-abbreviations': ['error', {
-    replacements: {
-      arg: false,
-      args: false,
-      btn: false,
-      dev: false,
-      docs: false,
-      elem: false,
-      env: false,
-      prev: false,
-      prop: false,
-      props: false,
-      ref: false,
-      rel: false,
-      src: false,
-    },
-    whitelist: {
-      getInitialProps: true,
-    },
-  }],
+  'unicorn/prevent-abbreviations': 'off',
+  // 'unicorn/prevent-abbreviations': ['error', {
+  //   replacements: {
+  //     arg: false,
+  //     args: false,
+  //     btn: false,
+  //     dev: false,
+  //     docs: false,
+  //     elem: false,
+  //     env: false,
+  //     prev: false,
+  //     prop: false,
+  //     props: false,
+  //     ref: false,
+  //     rel: false,
+  //     src: false,
+  //   },
+  //   whitelist: {
+  //     '-i18n': true,
+  //     getInitialProps: true,
+  //     i18n: true,
+  //   },
+  // }],
 }
 
 module.exports = {
@@ -173,8 +177,11 @@ module.exports = {
     {
       files: ['*.test.ts', '*.spec.ts', '*.test.tsx', '*.spec.tsx'],
       rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
         'max-nested-callbacks': 'off',
         'no-magic-numbers': 'off',
+        'unicorn/no-useless-undefined': 'off',
+        'unicorn/prevent-abbreviations': 'off',
       },
     },
   ],
@@ -280,6 +287,7 @@ module.exports = {
     'no-lonely-if': 'error',
     'no-loop-func': 'error',
     'no-magic-numbers': ['error', {ignore: [0, 1, -1, 2]}],
+    'no-mixed-spaces-and-tabs': 'error',
     'no-multi-assign': 'error',
     'no-multi-str': 'error',
     'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],

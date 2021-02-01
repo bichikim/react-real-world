@@ -1,88 +1,55 @@
+import {parallel, series} from 'gulp'
 import * as execa from 'gulp-execa'
-import {parallel, watch} from 'gulp'
+// noinspection ES6PreferShortImport
+import {createCopy} from './scripts/copy'
+// noinspection ES6PreferShortImport
+import {createTtscTask} from './scripts/ttsc'
+// noinspection ES6PreferShortImport
+import {createRemoveTask} from './scripts/remove'
+// noinspection ES6PreferShortImport
+import {createEslintTask} from './scripts/eslint'
 
-export interface TTscOptions {
-  emitDeclarationOnly?: boolean
-  project?: string
-  watch?: boolean
-}
-
-const eslint = (fix: boolean = false) => {
-  const fixString = fix ? '--fix' : ''
-  return `eslint${fix ? ' ' : ''}${fixString} --ext .ts src/**/*.{js,ts,jsx,tsx} *.js`
-}
-
-export const ttsc = (options: TTscOptions = {}) => {
-  const {watch, emitDeclarationOnly, project} = options
-
-  const script = ['ttsc --assumeChangesOnlyAffectDirectDependencies']
-
-  if (watch) {
-    script.push('--watch')
-  }
-
-  if (emitDeclarationOnly) {
-    script.push('--emitDeclarationOnly')
-  }
-
-  if (project) {
-    script.push(`--project ${project}`)
-  }
-
-  return script.join(' ')
-}
-
-export interface CpyOptions {
-  dist?: string
-  glob?: string
-  source?: string
-  target?: string
-  watch?: boolean
-}
-
-export const createCopy = (options: CpyOptions = {}) => {
-  const {source, dist, target, glob = '**/*', watch: _watch = false} = options
-
-  if (!source || !dist || !target) {
-    return () => Promise.resolve()
-  }
-
-  const task = execa.task(`cpy ./${glob} !./**/*.{ts,tsx} ../../${dist}/${target} --parents --cwd=${source}/${target}`)
-
-  if (_watch) {
-    return () => {
-      task()
-      return watch([`${source}/${target}/${glob}`], task)
-    }
-  }
-
-  return task
-}
-
-export const createTTsc = (options?: TTscOptions) => execa.task(ttsc(options))
+const DEFAULT_DIST_DIRECTORY = 'lib'
+const DEFAULT_SOURCE_DIRECTORY = 'src'
+const DEFAULT_TARGET = 'es2017'
+const DEFAULT_TS_PROJECT = 'tsconfig.bundle.json'
+const DEFAULT_TS_MODULE = 'es2020'
 
 export const rollup = execa.task('rollup -c')
 
-export const format = execa.task(eslint(true))
+export const format =  createEslintTask(true)
 
-export const lint = execa.task(eslint(false))
+export const lint = createEslintTask(false)
 
-export const build: any = parallel(rollup, createTTsc({
-  emitDeclarationOnly: true,
-  project: 'tsconfig.bundle.json',
-  watch: false,
-}))
-
+export const build: any = series(
+  createRemoveTask(DEFAULT_DIST_DIRECTORY),
+  createTtscTask({
+    dist: DEFAULT_DIST_DIRECTORY,
+    emitDeclarationOnly: false,
+    module: DEFAULT_TS_MODULE,
+    project: DEFAULT_TS_PROJECT,
+    target: DEFAULT_TARGET,
+  }),
+  createCopy({
+    dist: DEFAULT_DIST_DIRECTORY,
+    source: DEFAULT_SOURCE_DIRECTORY,
+    target: 'assets',
+    watch: false,
+  }),
+)
 export const dev: any = parallel(
   createCopy({
-    dist: 'lib',
-    source: 'src',
+    dist: DEFAULT_DIST_DIRECTORY,
+    source: DEFAULT_SOURCE_DIRECTORY,
     target: 'assets',
     watch: true,
   }),
-  createTTsc({
+  createTtscTask({
+    dist: DEFAULT_DIST_DIRECTORY,
     emitDeclarationOnly: false,
-    project: 'tsconfig.bundle.json',
+    module: DEFAULT_TS_MODULE,
+    project: DEFAULT_TS_PROJECT,
+    target: DEFAULT_TARGET,
     watch: true,
   }),
 )

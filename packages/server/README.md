@@ -24,7 +24,7 @@ module.exports = {
   host: 'localhost',
   password: 'dev-12345',
   port: 9876,
-  type: 'mysql',
+  type: 'mariadb',
   username: 'dev',
 }
 ```

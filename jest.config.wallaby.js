@@ -8,13 +8,10 @@ module.exports = {
   maxWorkers: '70%',
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
 
-  setupFiles: ['./jest.setup.js'],
-
-  snapshotSerializers: ['@emotion/jest/serializer'],
-
-  testMatch: [
-    '<rootDir>/packages/*/src/**/*.spec.ts',
+  projects: [
+    '<rootDir>/packages/*/jest.config.js',
   ],
+
 
   testPathIgnorePatterns: [
     '\\.snap$',
